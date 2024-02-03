@@ -1,0 +1,19 @@
+return {
+    'kristijanhusak/vim-dadbod-ui',
+    dependencies = {
+	{ 'tpope/vim-dadbod', lazy = true },
+	{ 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
+    },
+    cmd = {
+	'DBUI',
+	'DBUIToggle',
+	'DBUIAddConnection',
+	'DBUIFindBuffer',
+    },
+    init = function()
+	-- Your DBUI configuration
+	vim.g.db_ui_use_nerd_fonts = 1
+	vim.keymap.set("n", "<leader>da", ":DBUIFindBuffer\n", { desc = "Find or add buffer to a connection" })
+	vim.keymap.set("n", "<leader>do", ":DBUI\n", { desc = "Open DB UI" })
+    end,
+}

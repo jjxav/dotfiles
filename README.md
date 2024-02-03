@@ -1,0 +1,2 @@
+Install: stow
+stow .
