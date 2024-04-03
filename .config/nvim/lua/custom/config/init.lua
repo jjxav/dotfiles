@@ -13,3 +13,5 @@ vim.g.smartindent = true
 vim.o.scrolloff = 8
 
 vim.o.foldenable = false
+
+vim.wo.wrap = false
