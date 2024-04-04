@@ -69,5 +69,6 @@ return {
 	},
     },
 
-    require("custom.plugins.harpoonConfig")
+    require("custom.plugins.harpoonConfig"),
+    require("custom.plugins.lazygit")
 }
