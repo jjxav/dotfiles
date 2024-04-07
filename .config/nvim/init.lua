@@ -546,14 +546,14 @@ vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end, { 
 
 vim.keymap.set("n", "<leader>ya", function() harpoon:list():append() end, { desc = "Append to harpoon" })
 vim.keymap.set("n", "<leader>yd", function() harpoon:list():remove() end, { desc = "Remove to harpoon" })
-vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end, { desc = "Select 1 in harpoon list" })
-vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end, { desc = "Select 2 in harpoon list" })
-vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end, { desc = "Select 3 in harpoon list" })
-vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end, { desc = "Select 4 in harpoon list" })
+vim.keymap.set("n", "<A-h>", function() harpoon:list():select(1) end, { desc = "Select 1 in harpoon list" })
+vim.keymap.set("n", "<A-j>", function() harpoon:list():select(2) end, { desc = "Select 2 in harpoon list" })
+-- vim.keymap.set("n", "<A-k>", function() harpoon:list():select(3) end, { desc = "Select 3 in harpoon list" })
+-- vim.keymap.set("n", "<A-l>", function() harpoon:list():select(4) end, { desc = "Select 4 in harpoon list" })
 
 -- Toggle previous & next buffers stored within Harpoon list
-vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end, { desc = "Previous in the list" })
-vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end, { desc = "Next in the list" })
+vim.keymap.set("n", "<C-n>", function() harpoon:list():prev() end, { desc = "Previous in the list" })
+vim.keymap.set("n", "<C-m>", function() harpoon:list():next() end, { desc = "Next in the list" })
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
