@@ -15,3 +15,7 @@ vim.o.scrolloff = 8
 vim.o.foldenable = false
 
 vim.wo.wrap = false
+
+vim.filetype.add({
+	extension = { ['component.html'] = 'angular' }
+})
