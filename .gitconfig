@@ -1,0 +1,7 @@
+[user]
+	name = Xavier Legault
+[core]
+	excludesFile = ~/.gitignore
+	editor = vim
+[rerere]
+	enabled = false
