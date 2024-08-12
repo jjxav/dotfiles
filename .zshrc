@@ -103,3 +103,5 @@ source $ZSH/oh-my-zsh.sh
 
 source ~/.zshrc.custom
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
