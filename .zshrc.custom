@@ -18,3 +18,25 @@ function gitlog() {
 		xargs -I {} git show "{}" -- $1
 }
 
+function fancydir() {
+
+	[[ ! -d $1 ]] && return 1
+
+	dir=$(find $1 -maxdepth 1 -type d | fzf --preview="exa -lahF --icons --no-permissions --no-user --no-time {}")
+
+	[[ ! $dir ]] && return 1
+
+	session_name=$(basename $dir)
+	current_session=$([[ -n "$TMUX" ]] && tmux display-message -p '#S')
+
+	if [ ! "$TMUX" ]; then
+		tmux new-session -As $session_name -c $dir
+	elif [ ! $current_session = $session_name ] && [ $current_session ]; then
+		session_exist=$(tmux list-session | awk -F ':' '{ print $1 }' | grep "$session_name")
+
+		[[ ! $session_exist ]] && tmux new-session -dAs $session_name -c $dir
+		tmux switch-client -t $session_name
+	else
+		return 1
+	fi
+}
