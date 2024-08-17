@@ -4,5 +4,6 @@ sudo apt install -y stow \
 	bat \
 	tmux \
 	zsh \
-	exa
+	exa \
+	jq
 
