@@ -1,4 +1,6 @@
 
+export PATH=$HOME/.local/bin:$PATH
+
 export HISTFILE=$HOME/.zsh_history
 export HISTFILESIZE=1000000000
 export HISTSIZE=$HISTFILESIZE
