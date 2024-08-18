@@ -1,0 +1,91 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+version: 2
+blocks:
+  - type: prompt
+    alignment: left
+    newline: true
+    segments:
+      - type: session
+        style: plain
+        template: "{{ .UserName }} "
+        background: ""
+        foreground: 'p:purple'
+        text: ""
+        duration: 0s
+        namelength: 0
+      - type: text
+        style: plain
+        template: "in "
+        background: ""
+        foreground: "p:white"
+        text: ""
+        duration: 0s
+        namelength: 0
+      - type: path
+        style: plain
+        template: "{{ .Path }} "
+        properties:
+          style: full
+        background: ""
+        foreground: "p:green"
+        text: ""
+        duration: 0s
+        namelength: 0
+      - type: git
+        style: plain
+        template: "<p:white>on</> {{ .HEAD }}{{ if .Staging.Changed }}<p:orange> ● {{ .Staging.String }}</>{{ end }}{{ if .Working.Changed }}<p:orange> ● {{ .Working.String }}</>{{ end }} "
+        properties:
+          branch_ahead_icon: ""
+          branch_behind_icon: ""
+          branch_gone_icon: ""
+          branch_icon: ""
+          branch_identical_icon: ""
+          cherry_pick_icon: ""
+          commit_icon: ""
+          fetch_status: true
+          merge_icon: ""
+          rebase_icon: ""
+          revert_icon: ""
+          tag_icon: ""
+        background: ""
+        foreground: "p:blue"
+        text: ""
+        duration: 0s
+        namelength: 0
+  - type: rprompt
+    alignment: left
+    overflow: hide
+    segments:
+      - type: executiontime
+        style: plain
+        foreground: "#ffffff"
+        background: ""
+        template: "{{ .FormattedMs }} "
+        properties:
+          threshold: 500
+  - type: prompt
+    alignment: left
+    newline: true
+    segments:
+      - type: text
+        style: plain
+        template: "λ "
+        background: ""
+        foreground: "p:orange"
+        text: ""
+        duration: 0s
+        namelength: 0
+
+transient_prompt:
+  background: 
+  foreground: 'p:orange'
+  template: 'λ '
+
+palette:
+  green: '#87FF00'
+  orange: '#D75F00'
+  white: '#ffffff'
+  purple: '#7E46B6'
+  blue: '#5FD7FF'
+
