@@ -7,3 +7,5 @@ sudo apt install -y stow \
 	exa \
 	jq
 
+curl -s https://ohmyposh.dev/install.sh | bash -s
+

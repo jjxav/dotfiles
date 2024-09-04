@@ -1,7 +1,7 @@
 
 -- Disabled netrw for file-tree
-vim.g.loaded_netrw = true
-vim.g.loader_netrwPlugin = true
+vim.g.loaded_netrw = false
+vim.g.loader_netrwPlugin = false
 
 -- enable editorconfig intergration
 vim.g.editorconfig = true

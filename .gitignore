@@ -4,6 +4,7 @@
 
 .tmux/plugins
 
-.config
+.config/
 !.config/nvim
+!.config/ohmyposh
 
