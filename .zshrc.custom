@@ -28,13 +28,23 @@ function fancydir() {
 
 	session_name=$(basename $dir)
 	current_session=$([[ -n "$TMUX" ]] && tmux display-message -p '#S')
+	session_exist=$(tmux list-session 2> /dev/null | awk -F ':' '{ print $1 }' | grep "$session_name")
 
-	if [ ! "$TMUX" ]; then
-		tmux new-session -As $session_name -c $dir
-	elif [ ! $current_session = $session_name ] && [ $current_session ]; then
-		session_exist=$(tmux list-session | awk -F ':' '{ print $1 }' | grep "$session_name")
-
-		[[ ! $session_exist ]] && tmux new-session -dAs $session_name -c $dir
+	if [ ! "$TMUX" ] && [ ! "$session_exist" ]; then
+		tmux new-session -ds $session_name -c $dir -n "vim"
+		tmux new-window -d -n "git" -c $dir
+		tmux new-window -d -n "ssh" -c $dir
+		tmux new-window -d -n "other" -c $dir
+		tmux attach-session -d -t $session_name
+	elif [ ! "$TMUX" ] && [ $session_exist ]; then
+		tmux attach-session -d -t $session_name
+	elif [ "$TMUX" ] && [ ! $current_session = $session_name ] && [ ! "$session_exist" ]; then
+		tmux new-session -ds $session_name -c $dir -n "vim"
+		tmux new-window -t $session_name -d -n "git" -c $dir
+		tmux new-window -t $session_name -d -n "ssh" -c $dir
+		tmux new-window -t $session_name -d -n "other" -c $dir
+		tmux switch-client -t $session_name
+	elif [ "$TMUX" ] && [ ! $current_session = $session_name ]; then
 		tmux switch-client -t $session_name
 	else
 		return 1
