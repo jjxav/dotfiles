@@ -5,3 +5,7 @@
 	editor = nvim
 [rerere]
 	enabled = false
+[alias]
+	graph = log --graph
+[color]
+	ui = auto
