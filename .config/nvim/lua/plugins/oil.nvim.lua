@@ -11,6 +11,6 @@ return {
 			},
 		})
 
-		set('n', '<leader>cd', ':e %:h<CR>', { desc = '[C]urrent [D]ir' })
+		set('n', '-', ':Oil<CR>', { desc = '[C]urrent [D]ir' })
 	end,
 }
