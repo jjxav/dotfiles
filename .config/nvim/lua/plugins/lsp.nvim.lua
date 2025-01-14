@@ -53,6 +53,10 @@ return {
 						local server = servers[server_name] or {}
 						server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
 
+						if server == {} then
+							return
+						end
+
 						require('lspconfig')[server_name].setup(server)
 					end,
 				}
@@ -60,15 +64,33 @@ return {
 		end,
 	},
 
+	-- Autocompletion
 	{
-		-- Autocompletion
 		'hrsh7th/nvim-cmp',
 		event = 'InsertEnter',
 		config = function ()
 			local cmp = require 'cmp'
-			cmp.setup {
-
-			}
+			cmp.setup { }
 		end,
 	},
+	{
+		'saghen/blink.cmp',
+
+		-- use a release tag to download pre-built binaries
+		version = '*',
+
+		---@module 'blink.cmp'
+		---@type blink.cmp.Config
+		opts = {
+			keymap = { preset = 'default' },
+			appearance = {
+				use_nvim_cmp_as_default = true,
+				nerd_font_variant = 'mono'
+			},
+			sources = {
+				default = { 'lsp', 'path', 'snippets', 'buffer' },
+			},
+		},
+		opts_extend = { "sources.default" }
+	}
 }
