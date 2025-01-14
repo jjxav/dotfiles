@@ -6,6 +6,7 @@ vim.g.loaded_netrw = false
 vim.g.loader_netrwPlugin = false
 
 require("lazy-init")
+require("keymap")
 
 vim.wo.number = true
 vim.wo.relativenumber = true
