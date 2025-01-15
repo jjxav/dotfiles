@@ -10,9 +10,9 @@ vim.api.nvim_create_autocmd('BufEnter', {
 	callback = function ()
 
 		if vim.bo.filetype == 'lua' then
-			set('n', '<leader>lx', ':.lua<CR>', '[L]ua e[x]ectute line')
-			set('n', '<leader>lX', ':%lua<CR>','[L]ua e[X]ectute file')
-			set('v', '<leader>lX', ":'<,'>lua<CR>",'[L]ua e[X]ectute selection')
+			set('n', '<leader>lx', '<CMD>.lua<CR>', '[L]ua e[x]ectute line')
+			set('n', '<leader>lX', '<CMD>%lua<CR>','[L]ua e[X]ectute file')
+			set('v', '<leader>lX', "<CMD>'<,'>lua<CR>",'[L]ua e[X]ectute selection')
 		end
 	end,
 })

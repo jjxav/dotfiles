@@ -1,7 +1,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Disabled netrw for file-tree
 vim.g.loaded_netrw = false
 vim.g.loader_netrwPlugin = false
 
