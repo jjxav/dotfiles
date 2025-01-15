@@ -3,10 +3,10 @@ return {
 	opts = {
 		theme = 'wave',
 		background = {
-			dark = "dragon"
+			dark = "wave"
 		},
 	},
-	init = function ()
+	init = function()
 		vim.cmd("colorscheme kanagawa")
 	end,
 	config = true,

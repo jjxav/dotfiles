@@ -2,7 +2,7 @@ return {
 	{
 		'numToStr/Comment.nvim',
 		opts = {
-			-- add any options here
+
 		}
 	},
 	{
@@ -12,4 +12,3 @@ return {
 		opts = { signs = false }
 	},
 }
-

@@ -1,4 +1,3 @@
-
 -- Disabled netrw for file-tree
 vim.g.loaded_netrw = false
 vim.g.loader_netrwPlugin = false
@@ -15,7 +14,3 @@ vim.o.scrolloff = 8
 vim.o.foldenable = false
 
 vim.wo.wrap = false
-
--- vim.filetype.add({
--- 	extension = { ['component.html'] = 'angular' }
--- })
