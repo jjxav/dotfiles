@@ -1,9 +1,9 @@
 return {
 	'rebelot/kanagawa.nvim',
 	opts = {
-		theme = 'wave',
+		theme = 'dragon',
 		background = {
-			dark = "wave"
+			dark = "dragon"
 		},
 	},
 	init = function()
