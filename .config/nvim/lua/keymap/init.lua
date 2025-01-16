@@ -14,4 +14,4 @@ set('<C-u>', '<C-u>zz')
 
 set('<leader>p', '"_dP', '[P]ut without replacing yank')
 
-set('<ESC>', '<cmd>nohlsearch<CR>', 'Clear search result', { 'n', 'v' })
+set('<ESC>', '<cmd>nohlsearch<CR>', 'Clear search result', { 'n' })
