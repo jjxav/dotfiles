@@ -22,7 +22,13 @@ function fancydir() {
 
 	[[ ! -d $1 ]] && return 1
 
-	dir=$(find $1 -maxdepth 1 -type d | fzf --preview="exa -lahF --icons --no-permissions --no-user --no-time {}")
+	dir_git=$(find $1 -maxdepth 3 -type d -iname '.git' -exec sh -c "realpath {} | xargs dirname" \;)
+	dir_current=$(find $1 -maxdepth 1 -type d)
+
+	dir=$(echo "$dir_current\n$dir_git" \
+		| sort -n \
+		| uniq \
+		| fzf --preview="exa -lahF --icons --no-permissions --no-user --no-time --group-directories-first {}")
 
 	[[ ! $dir ]] && return 1
 
