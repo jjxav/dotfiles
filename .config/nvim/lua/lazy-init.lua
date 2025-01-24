@@ -20,6 +20,11 @@ require("lazy").setup({
 
 	spec = {
 		{ import = "plugins" }
-	}
+	},
+
+	dev = {
+		path = '~/plugins.nvim',
+		fallback = false,
+	},
 
 })

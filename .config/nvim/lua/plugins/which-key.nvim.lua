@@ -11,6 +11,7 @@ return {
 			{ '<leader>l', group = '[L]ua',    mode = nil },
 			{ '<leader>y', group = 'Harpoon',  mode = nil },
 			{ '<leader>s', group = '[S]earch', mode = nil },
+			{ '<leader>sm', group = '[M]ulti', mode = nil },
 		},
 	},
 	keys = {
