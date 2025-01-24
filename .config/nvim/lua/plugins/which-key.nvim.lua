@@ -9,6 +9,7 @@ return {
 			{ '<leader>f',  group = '[F]ile',        mode = nil },
 			{ '<leader>g',  group = '[G]it',         mode = nil },
 			{ '<leader>gb', group = '[G]it [B]lame', mode = nil },
+			{ '<leader>gb', group = '[G]it [D]iff', mode = nil },
 			{ '<leader>l',  group = '[L]ua',         mode = nil },
 			{ '<leader>y',  group = 'Harpoon',       mode = nil },
 			{ '<leader>s',  group = '[S]earch',      mode = nil },
