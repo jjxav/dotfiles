@@ -22,7 +22,7 @@ function fancydir() {
 
 	[[ ! -d $1 ]] && return 1
 
-	dir_git=$(find $1 -maxdepth 3 -type d -iname '.git' -exec sh -c "realpath {} | xargs dirname" \;)
+	dir_git=$(find $1 -maxdepth 3 -type d -iname '.git' -exec sh -c "realpath -s {} | xargs dirname" \;)
 	dir_current=$(find $1 -maxdepth 1 -type d)
 
 	dir=$(echo "$dir_current\n$dir_git" \
