@@ -15,3 +15,6 @@ set('<C-u>', '<C-u>zz')
 set('<leader>p', '"_dP', '[P]ut without replacing yank')
 
 set('<ESC>', '<cmd>nohlsearch<CR>', 'Clear search result', { 'n' })
+
+set('<leader>fc', '<cmd>let @+=@%<CR>', '[F]ile Path [C]opy Cliboard')
+
