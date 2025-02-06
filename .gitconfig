@@ -1,5 +1,6 @@
 [user]
 	name = Xavier Legault
+	email = legault.xavier@live.ca
 [core]
 	excludesFile = ~/.gitignore
 	editor = nvim
@@ -9,3 +10,32 @@
 	graph = log --graph
 [color]
 	ui = auto
+
+;
+; GitLab
+;
+[includeIf "hasconfig:remote.*.url:git@gitlab.com:*/**"]
+	; Personal
+	path = .gitconfig.gitlab
+
+[includeIf "hasconfig:remote.*.url:git@gitlab.com:prosomo/**"]
+	; Profesional
+	path = .gitconfig.gitlab.prosomo
+
+;
+; GitHub
+;
+[includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
+	; Personal
+	path = .gitconfig.github
+
+[includeIf "hasconfig:remote.*.url:git@github.com:Tonik-web-studio/**"]
+	; Profesional
+	path = .gitconfig.github.prosomo
+[includeIf "hasconfig:remote.*.url:git@github.com:Yannickweb-net/**"]
+	; Profesional
+	path = .gitconfig.github.prosomo
+[includeIf "hasconfig:remote.*.url:git@github.com:prosomo/**"]
+	; Profesional
+	path = .gitconfig.github.prosomo
+
