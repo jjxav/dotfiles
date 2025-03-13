@@ -14,6 +14,7 @@ return {
 			{ '<leader>w',  group = '[W]orspace',    mode = nil },
 			{ '<leader>gb', group = '[G]it [B]lame', mode = nil },
 			{ '<leader>gb', group = '[G]it [D]iff',  mode = nil },
+			{ '<leader>h', group = 'Git [H]unk',  mode = nil },
 			{ '<leader>l',  group = '[L]ua',         mode = nil },
 			{ '<leader>y',  group = 'Harpoon',       mode = nil },
 			{ '<leader>s',  group = '[S]earch',      mode = nil },
