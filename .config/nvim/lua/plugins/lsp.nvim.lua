@@ -81,7 +81,7 @@ return {
 					set('<leader>D', builtin.lsp_type_definitions, 'Type [D]efinition')
 					set('<leader>ds', builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
 					set('<leader>ws', builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-					set('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+					set('<leader>cr', vim.lsp.buf.rename, '[C]ursor [R]ename')
 					set('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
 
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
@@ -117,9 +117,13 @@ return {
 
 
 					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
-						set('<leader>th',
-							function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf }) end,
-							'[T]oggle Inlay [H]ints')
+						set(
+							'<leader>th',
+							function()
+								vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+							end,
+							'[T]oggle Inlay [H]ints'
+						)
 					end
 				end,
 			})
