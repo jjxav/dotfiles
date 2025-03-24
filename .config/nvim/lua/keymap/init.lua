@@ -12,7 +12,7 @@ set('<leader>fn', vim.cmd.bnext, 'Go to next buffer')
 set('<C-d>', '<C-d>zz')
 set('<C-u>', '<C-u>zz')
 
-set('<leader>p', '"_dP', '[P]ut without replacing yank')
+set('<leader>p', '"_dP', '[P]ut without replacing yank', { 'v' })
 
 set('<ESC>', '<cmd>nohlsearch<CR>', 'Clear search result', { 'n' })
 
