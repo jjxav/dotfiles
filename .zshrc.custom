@@ -28,7 +28,7 @@ function fancydir() {
 	dir=$(echo "$dir_current\n$dir_git" \
 		| sort -n \
 		| uniq \
-		| fzf --preview="exa -lahF --icons --no-permissions --no-user --no-time --group-directories-first {}")
+		| fzf --preview="eza -lahF --icons --no-permissions --no-user --no-time --group-directories-first {}")
 
 	[[ ! $dir ]] && return 1
 
