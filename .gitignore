@@ -9,6 +9,8 @@ gits/
 !.config/nvim
 !.config/ohmyposh
 !.config/hypr
+!.config/pipewire
+!.config/wireplumber
 !.config/waybar
 !.config/wofi
 
