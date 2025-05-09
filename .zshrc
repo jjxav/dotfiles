@@ -47,8 +47,11 @@ source <(fzf --zsh)
 alias ls="ls --color=always"
 alias less="less -R"
 
-source ~/.zshrc.custom
+eval "$(zoxide init zsh)"
+source <(fzf --zsh)
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+source ~/.zshrc.custom

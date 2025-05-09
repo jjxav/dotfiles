@@ -1,0 +1,56 @@
+* {
+    font-family: 'CodeNewRoman Nerd Font';
+    font-size: 16px;
+	color: #ffffff;
+}
+
+window#waybar {
+	background: rgba(25, 25, 25, 1);
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+window#waybar.empty {
+
+}
+window#waybar.solo {
+
+}
+
+label.module,
+button {
+	border-radius: 2px;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background: transparent;
+    color: #888;
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces {
+	border: 0;
+}
+#workspaces button {
+	border: 1px solid #888;
+}
+
+box.module,
+label.module {
+	border: 1px solid #888;
+}
+
+#workspaces,
+#keyboard-state,
+#network,
+#temperature,
+#tray,
+#cpu,
+#memory,
+#clock {
+	padding: 10px;
+}
