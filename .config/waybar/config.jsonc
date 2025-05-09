@@ -1,104 +1,105 @@
 // -*- mode: jsonc -*-
 {
-    "layer": "top", // Waybar at top layer
-    // "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height": 30, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    "spacing": 4, // Gaps between modules (4px)
-    // Choose the order of the modules
-
-    "modules-left": [
-        "temperature",
-        "cpu",
-        "memory",
+	"layer": "top", // Waybar at top layer
+	// "position": "bottom", // Waybar position (top|bottom|left|right)
+	"height": 45, // Waybar height (to be removed for auto height)
+	// "width": 1280, // Waybar width
+	"spacing": 4, // Gaps between modules (4px)
+	// Choose the order of the modules
+	"modules-left": [
+		"tray",
 	],
-
-    "modules-center": [
+	"modules-center": [
 		"hyprland/workspaces"
 	],
-
-    "modules-right": [
-        "tray",
-        "network",
-        "keyboard-state",
-        "clock",
-    ],
-
-    // Modules configuration
-    // "sway/workspaces": {
-    //     "disable-scroll": true,
-    //     "all-outputs": true,
-    //     "warp-on-scroll": false,
-    //     "format": "{name}: {icon}",
-    //     "format-icons": {
-    //         "1": "",
-    //         "2": "",
-    //         "3": "",
-    //         "4": "",
-    //         "5": "",
-    //         "urgent": "",
-    //         "focused": "",
-    //         "default": ""
-    //     }
-    // },
-
+	"modules-right": [
+		"wireplumber",
+		"network",
+		"group/hardware",
+	],
+	"group/hardware": {
+		"orientation": "horizontal",
+		"modules": [
+			"clock",
+			"temperature",
+			"cpu",
+			"memory",
+		],
+		"drawer": {
+			"click-to-reveal": true,
+			"transition-left-to-right": false,
+		}
+	},
+	// Modules configuration
+	"wireplumber": {
+		"format": "󰎇 {volume}%",
+		"format-muted": "󰎊",
+		"on-click": "helvum",
+		"max-volume": 150,
+		"scroll-step": 0.2
+	},
 	"hyprland/workspaces": {
-		"format": "{id} {icon}",
+		"format": "{icon}",
 		// "on-scroll-up": "hyprctl dispatch workspace e+1",
 		// "on-scroll-down": "hyprctl dispatch workspace e-1"
 	},
-    "keyboard-state": {
-        "numlock": true,
-        "capslock": true,
-        "format": "{name} {icon}",
-        "format-icons": {
-            "locked": "",
-            "unlocked": ""
-        }
-    },
-    "tray": {
-        // "icon-size": 21,
-        "spacing": 10
-    },
-    "clock": {
-        "timezone": "America/Toronto",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:%Y-%m-%d %H:%M}"
-    },
-    "cpu": {
-        "format": "{usage}% ",
-        "tooltip": false
-    },
-    "memory": {
-        "format": "{}% "
-    },
-    "temperature": {
-        // "thermal-zone": 2,
-        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-        "critical-threshold": 80,
-        // "format-critical": "{temperatureC}°C {icon}",
-        "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", ""]
-    },
-    "network": {
-        // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "({signalStrength}%) ",
-        "format-ethernet": "󰈁",
-        // "tooltip-format": "{ifname} via {gwaddr} ",
-        // "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected 󰈂",
-        // "format-alt": "{ifname}: {ipaddr}/{cidr}"
-    },
-    "custom/media": {
-        "format": "{icon} {text}",
-        "return-type": "json",
-        "max-length": 40,
-        "format-icons": {
-            "spotify": "",
-            "default": "🎜"
-        },
-        "escape": true,
-        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
-        // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
-    },
+	"tray": {
+		// "icon-size": 21,
+		"spacing": 10
+	},
+	"clock": {
+		"timezone": "America/Toronto",
+		"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+		"format": "{:%Y-%m-%d %H:%M}",
+		"calendar": {
+			"mode": "year",
+			"mode-mon-col": 3,
+			"weeks-pos": "right",
+			"on-scroll": 1,
+			"format": {
+				"months": "<span color='#ffead3'><b>{}</b></span>",
+				"days": "<span color='#ecc6d9'><b>{}</b></span>",
+				"weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+				"weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+				"today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+			}
+		},
+	},
+	"cpu": {
+		"format": "{usage}% ",
+		"tooltip": true
+	},
+	"memory": {
+		"format": "{}% "
+	},
+	"temperature": {
+		"critical-threshold": 80,
+		"format": "{temperatureC}°C {icon}",
+		"format-icons": [
+			"",
+			"",
+			""
+		]
+	},
+	"network": {
+		// "interface": "wlp2*", // (Optional) To force the use of this interface
+		"format-wifi": "({signalStrength}%) ",
+		"format-ethernet": "󰈁",
+		// "tooltip-format": "{ifname} via {gwaddr} ",
+		// "format-linked": "{ifname} (No IP) ",
+		"format-disconnected": "Disconnected 󰈂",
+		// "format-alt": "{ifname}: {ipaddr}/{cidr}"
+	},
+	"custom/media": {
+		"format": "{icon} {text}",
+		"return-type": "json",
+		"max-length": 40,
+		"format-icons": {
+			"spotify": "",
+			"default": "🎜"
+		},
+		"escape": true,
+		"exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+		// "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+	},
 }

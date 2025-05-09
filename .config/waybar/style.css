@@ -1,56 +1,138 @@
 * {
-    font-family: 'CodeNewRoman Nerd Font';
+    font-family: 'RobotoMono Nerd Font';
     font-size: 16px;
 	color: #ffffff;
+	text-shadow: 0px 0px 4px #000000;
+}
+
+button {
+	outline: none;
 }
 
 window#waybar {
-	background: rgba(25, 25, 25, 1);
+	background: transparent;
     transition-duration: .5s;
 }
-
-window#waybar.hidden {
-    opacity: 0.2;
+window > box {
+	padding-top: 3px;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
-window#waybar.empty {
-
-}
-window#waybar.solo {
-
-}
-
-label.module,
-button {
-	border-radius: 2px;
+widget label,
+widget {
+	min-width: 0;
+	padding: 0;
+	margin: 0;
+	border: none;
 }
 
-#workspaces button {
-    padding: 0 5px;
-    background: transparent;
-    color: #888;
-    border-bottom: 3px solid transparent;
+widget.modules-left {
+	margin-right: 5px;
 }
+widget.modules-right {
+	margin-left: 5px;
+}
+widget.modules-center {
+	margin-left: 2.5px;
+	margin-right: 2.5px;
+}
+
+widget > label,
+widget > box {
+	min-width: 30px;
+	min-height: 30px;
+}
+
+widget > label {
+	background: rgba(25, 25, 25, 0.75);
+	padding-left: 10px;
+	padding-right: 10px;
+	border-radius: 10px;
+	border: 2px solid rgba(125, 125, 125, 1);
+}
+
+widget > box {
+	/* border-top: 3px solid rgba(75, 45, 110, 1); */
+}
+
+widget > box#workspaces button {
+	margin-right: 2.5px;
+	margin-left: 2.5px;
+
+	min-height: 30px;
+	min-width: 22px;
+	/* max-height: 30px; */
+	/* max-width: 30px; */
+	border: 2px solid rgba(125, 125, 125, 1);
+	border-radius: 100%;
+}
+
+widget > box#workspaces button label {
+	text-shadow: none;
+	color: transparent;
+}
+
+widget > box#workspaces button.visible {
+	background: transparent;
+}
+
+widget > box#workspaces button.visible label {
+	color: #fff;
+}
+
+widget > box#workspaces button.active {
+	/* background: #FFF; */
+	/* background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 75%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%); */
+}
+
+widget > box#workspaces button.active label {
+}
+
+/* widget > box#tray { */
+/* 	background: rgba(0, 0, 0, 0.33); */
+/* } */
+/* widget > box#tray widget { */
+/* 	border-bottom: 3px solid rgba(100, 100, 100, 1); */
+/* } */
+/*
 
 #workspaces {
+	background: transparent;
 	border: 0;
 }
 #workspaces button {
 	border: 1px solid #888;
+	margin-left: 2px;
+	margin-right: 2px;
+	background: rgba(25, 25, 25, 1);
 }
 
+#workspaces button,
+#workspaces button label {
+	min-width: 0;
+	padding: 0;
+	margin: 0;
+}
+
+#workspaces button.visible {
+	border: 2px solid #fff;
+	background: rgba(160, 160, 160, 1);
+}
+
+#workspaces button.visible,
+#workspaces button.visible label {
+	color: #000;
+}
+
+#workspaces button,
 box.module,
 label.module {
 	border: 1px solid #888;
+	background: rgba(25, 25, 25, 1);
+	min-width: 40px;
+	padding-left: 5px;
+	padding-right: 5px;
 }
 
-#workspaces,
-#keyboard-state,
-#network,
-#temperature,
-#tray,
-#cpu,
-#memory,
-#clock {
-	padding: 10px;
-}
+*/
