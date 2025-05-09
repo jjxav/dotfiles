@@ -7,4 +7,7 @@
 .config/*/
 !.config/nvim
 !.config/ohmyposh
+!.config/hypr
+!.config/waybar
+!.config/wofi
 

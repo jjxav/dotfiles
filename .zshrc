@@ -48,3 +48,5 @@ alias less="less -R"
 
 source ~/.zshrc.custom
 
+eval "$(zoxide init zsh)"
+source <(fzf --zsh)
