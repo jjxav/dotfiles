@@ -9,7 +9,6 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
   --pointer="-" --separator="─" --scrollbar="│" --info="right"'
 
 alias vim=nvim
-alias bat='batcat'
 
 function gitlog() {
 	git log --no-merges --oneline -- $1 | \

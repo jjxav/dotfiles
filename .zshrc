@@ -47,7 +47,9 @@ source <(fzf --zsh)
 alias ls="ls --color=always"
 alias less="less -R"
 
-eval "$(zoxide init zsh)"
+source ~/.zshrc.custom
+
+eval "$(zoxide init zsh --cmd cd)"
 source <(fzf --zsh)
 
 export NVM_DIR="$HOME/.nvm"
