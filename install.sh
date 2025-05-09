@@ -4,9 +4,13 @@ sudo pacman -Sy --noconfirm hyprland wofi
 sudo pacman -Sy --noconfirm waybar cava
 sudo pacman -Sy --noconfirm pipewire pipewire-session-manager pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse wireplumber 
 sudo pacman -Sy --noconfirm lib32-libpipewire libpipewire libwireplumber
+# sudo yay -Sy --noconfirm xdg-desktop-portal-wayland
 sudo pacman -Sy --noconfirm pipewire-libcamera 
+sudo pacman -Sy --noconfirm grim slurp
+sudo pacman -Sy --noconfirm hyprpaper
 
 curl -s https://ohmyposh.dev/install.sh | bash -s
+
 [ ! -d ~/.tmux/plugins/tpm ] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 curl -s https://ohmyposh.dev/install.sh | bash -s
