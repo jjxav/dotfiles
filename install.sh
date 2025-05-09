@@ -1,5 +1,5 @@
 
-sudo pacman -Sy --noconfirm stow ripgrep bat tmux eza zsh zip unzip jq lazygit zoxide clang
+sudo pacman -Sy --noconfirm stow ripgrep bat tmux eza zsh zip unzip jq lazygit zoxide fzf less clang
 sudo pacman -Sy --noconfirm hyprland wofi
 sudo pacman -Sy --noconfirm waybar cava
 sudo pacman -Sy --noconfirm pipewire pipewire-session-manager pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse wireplumber 
