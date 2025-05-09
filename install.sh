@@ -1,6 +1,7 @@
 
 sudo pacman -Sy --noconfirm stow ripgrep bat tmux eza zsh zip unzip jq lazygit clang
 sudo pacman -Sy --noconfirm hyprland wofi waybar
+sudo pacman -Sy --noconfirm waybar cava
 sudo pacman -Sy --noconfirm pipewire pipewire-session-manager pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse wireplumber 
 sudo pacman -Sy --noconfirm lib32-libpipewire libpipewire libwireplumber
 sudo pacman -Sy --noconfirm pipewire-libcamera 
