@@ -8,8 +8,8 @@ sudo apt install -y stow \
 	zsh \
 	jq \
 	eza \
-	lazygit
 	clang
+	# lazygit \
 
 curl -s https://ohmyposh.dev/install.sh | bash -s
 
@@ -18,6 +18,10 @@ curl -s https://ohmyposh.dev/install.sh | bash -s
 #sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
 
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+mkdir -p ./gits/delta
+wget -O ./gits/delta.deb https://github.com/dandavison/delta/releases/download/0.18.2/git-delta_0.18.2_amd64.deb
+sudo dpkg -i ./gits/delta.deb
 
 # -[x] install go
 # -[x] install nvm

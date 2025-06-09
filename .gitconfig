@@ -1,41 +1,57 @@
 [user]
 	name = Xavier Legault
 	email = legault.xavier@live.ca
+
 [core]
 	excludesFile = ~/.gitignore
 	editor = nvim
+	pager = delta
+
 [rerere]
 	enabled = false
+
 [alias]
 	graph = log --graph
+
 [color]
 	ui = auto
 
-;
-; GitLab
-;
+[interactive]
+	diffFilter = delta --color-only
+
+[merge]
+	conflictStyle = zdiff3
+
+[delta]
+	navigate = true
+	line-numbers = true
+	syntax-theme = Dracula
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                     GitLab                     ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Personal
 [includeIf "hasconfig:remote.*.url:git@gitlab.com:*/**"]
-	; Personal
 	path = .gitconfig.gitlab
 
+; Profesional
 [includeIf "hasconfig:remote.*.url:git@gitlab.com:prosomo/**"]
-	; Profesional
 	path = .gitconfig.gitlab.prosomo
 
-;
-; GitHub
-;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;                     GitHub                     ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Personal
 [includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
-	; Personal
 	path = .gitconfig.github
 
+; Profesional
 [includeIf "hasconfig:remote.*.url:git@github.com:Tonik-web-studio/**"]
-	; Profesional
 	path = .gitconfig.github.prosomo
 [includeIf "hasconfig:remote.*.url:git@github.com:Yannickweb-net/**"]
-	; Profesional
 	path = .gitconfig.github.prosomo
 [includeIf "hasconfig:remote.*.url:git@github.com:prosomo/**"]
-	; Profesional
 	path = .gitconfig.github.prosomo
 
