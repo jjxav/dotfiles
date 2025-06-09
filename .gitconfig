@@ -1,6 +1,5 @@
 [user]
 	name = Xavier Legault
-	email = legault.xavier@live.ca
 
 [core]
 	excludesFile = ~/.gitignore
