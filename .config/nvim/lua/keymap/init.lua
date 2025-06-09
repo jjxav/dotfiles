@@ -18,3 +18,12 @@ set('<ESC>', '<cmd>nohlsearch<CR>', 'Clear search result', { 'n' })
 
 set('<leader>fc', '<cmd>let @+=@%<CR>', '[F]ile Path [C]opy Cliboard')
 
+
+set(
+	'<leader>d',
+	function()
+		vim.diagnostic.open_float({
+			scope = 'line'
+		})
+	end
+)
