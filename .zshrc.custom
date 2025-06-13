@@ -49,11 +49,16 @@ function search_gits() {
 	echo $dir
 }
 
+function gits () {
+	dir=$(search_gits "$1")
+	[[ ! $dir ]] && return 1
+	cd $dir
+}
+
 function fancydir() {
 
 	dir=$(search_gits "$1")
 	[[ ! $dir ]] && return 1
-	shift
 
 	session_name=${$(basename $dir)/./-}
 	current_session=$([[ -n "$TMUX" ]] && tmux display-message -p '#S')
