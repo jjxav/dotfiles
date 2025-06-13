@@ -32,6 +32,11 @@ blocks:
     foreground: p:green
     type: path
     style: plain
+  - properties: {}
+    type: session
+    style: plain
+    foreground: p:orange
+    template: "{{ if .SSHSession }}<p:white>from</> {{ .HostName }} {{ end }}"
   - properties:
       branch_ahead_icon: ""
       branch_behind_icon: ""
