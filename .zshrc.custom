@@ -18,19 +18,42 @@ function gitlog() {
 		xargs -I {} git show "{}" -- $1
 }
 
-function fancydir() {
 
-	[[ ! -d $1 ]] && return 1
+function search_gits() {
+	list_dirs=""
 
-	dir_git=$(find $1 -maxdepth 3 -type d -iname '.git' -exec sh -c "realpath -s {} | xargs dirname" \;)
-	dir_current=$(find $1 -maxdepth 1 -type d)
+	git_dirs="`find /srv ~ -type d \( -name '.*' -o -name 'gits' -o -path '*/vendor/*' -o -path '*/node_modules/*' \) -prune -iname '.git' -exec dirname {}  \; | xargs realpath -L | sort -n`"
 
-	dir=$(echo "$dir_current\n$dir_git" \
-		| sort -n \
-		| uniq \
-		| fzf --preview="eza -lahF --icons --no-permissions --no-user --no-time --group-directories-first {}")
+	search_dirs=""
+	if [[ -d $1 ]]; then
+		search_dir="`realpath $1`"
+		search_dirs="`find $search_dir -maxdepth 1 -type d`"
+	fi
+
+	if [[ -z $search_dirs ]] && [[ -z $git_dirs ]]; then
+		return 1
+	elif [[ ! -z $search_dirs ]] && [[ ! -z $git_dirs ]]; then
+		list_dirs="$search_dirs\n$git_dirs"
+	elif [[ ! -z $search_dirs ]]; then
+		list_dirs="$search_dirs"
+	elif [[ ! -z $git_dirs ]]; then
+		list_dirs="$git_dirs"
+	fi
+
+	list_dirs=$(echo "$list_dirs" | sort -n | uniq)
+
+	dir="`echo $list_dirs | fzf --preview="eza -lahF --icons --no-permissions --no-user --no-time --group-directories-first {}"`"
 
 	[[ ! $dir ]] && return 1
+
+	echo $dir
+}
+
+function fancydir() {
+
+	dir=$(search_gits "$1")
+	[[ ! $dir ]] && return 1
+	shift
 
 	session_name=${$(basename $dir)/./-}
 	current_session=$([[ -n "$TMUX" ]] && tmux display-message -p '#S')
