@@ -1,39 +1,113 @@
+#!/usr/bin/env bash
 
-sudo pacman -Sy --noconfirm stow ripgrep bat tmux eza zsh zip unzip jq lazygit zoxide fzf less clang
-sudo pacman -Sy --noconfirm hyprland wofi
-sudo pacman -Sy --noconfirm waybar cava
-sudo pacman -Sy --noconfirm pipewire pipewire-session-manager pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse wireplumber 
-sudo pacman -Sy --noconfirm lib32-libpipewire libpipewire libwireplumber
-# sudo yay -Sy --noconfirm xdg-desktop-portal-wayland
-sudo pacman -Sy --noconfirm pipewire-libcamera 
-sudo pacman -Sy --noconfirm grim slurp
-sudo pacman -Sy --noconfirm hyprpaper
+os="`cat /etc/os-release | grep -E '^ID' | awk -F '=' '{ print $2 }'`"
+target=$1
+
+if [[ -z $os ]]; then
+	echo 'OS not set' 1>&2
+	exit 1
+fi
+
+function install () {
+	case $os in
+		arch)
+			sudo pacman -Sy --noconfirm "$@"
+		;;
+		ubuntu)
+			sudo apt install "$@"
+		;;
+		*)
+			echo 'Not a supported os' 1>&2
+			return 1
+	esac
+}
+
+function upgrade() {
+	case $os in
+		arch)
+			sudo pacman -Syy
+		;;
+		ubuntu)
+			sudo apt update
+		;;
+		*)
+			echo 'Not a supported os' 1>&2
+			return 1
+	esac
+}
+
+####################################################################################################
+##                                            Arch                                                ##
+####################################################################################################
+function arch () {
+	install git-delta neovim less zoxide rust go lazygit
+
+	if [ $target = 'desktop' ]; then
+		install hyprland wofi
+		install waybar cava
+		install pipewire pipewire-session-manager pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse wireplumber 
+		install lib32-libpipewire libpipewire libwireplumber
+		# sudo yay -Sy --noconfirm xdg-desktop-portal-wayland
+		install pipewire-libcamera 
+		install grim slurp
+		install qt5-wayland qt6-wayland
+	fi
+
+}
+
+####################################################################################################
+##                                          Ubunutu                                               ##
+####################################################################################################
+function unbuntu() {
+	[ ! -d ./gits/glab.deb ] && wget -O ./gits/glab.deb https://gitlab.com/gitlab-org/cli/-/releases/v1.59.2/downloads/glab_1.59.2_linux_amd64.deb
+	sudo dpkg -i ./gits/glab.deb
+
+	[ ! -d ./gits/delta.deb ] && wget -O ./gits/delta.deb https://github.com/dandavison/delta/releases/download/latest/git-delta_0.18.2_amd64.deb
+	sudo dpkg -i ./gits/delta.deb
+
+	[ ! -d ./gits/zoxide.deb ] && wget -O ./gits/zoxide.deb https://github.com/ajeetdsouza/zoxide/releases/download/latest/zoxide_0.9.8-1_amd64.deb
+	sudo dpkg -i ./gits/zoxide.deb
+
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+	[ ! -d ./gits/go.tar.gz ] && wget -O ./gits/go.tar.gz https://go.dev/dl/go1.24.4.linux-amd64.tar.gz
+	rm -rf /usr/local/go && tar -C /usr/local -xzf ./gits/go.tar.gz
+	if [[ ! ":$PATH:" == *"/usr/local/go/bin"* ]]; then
+		echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.zprofile
+	fi
+
+	/bin/go install github.com/jesseduffield/lazygit@latest
+
+	[ ! -d ~/.fzf ] && git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+	~/.fzf/install
+
+	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+	sudo rm -rf /opt/nvim
+	sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
+}
+
+
+
+####################################################################################################
+##                                          Install                                               ##
+####################################################################################################
+
+upgrade
+
+case $os in
+	arch)
+		arch
+		;;
+	ubuntu)
+		unbuntu
+		;;
+esac
+
+install stow zip unzip ripgrep bat tmux zsh jq clang 
+install eza
+
 
 curl -s https://ohmyposh.dev/install.sh | bash -s
 
 [ ! -d ~/.tmux/plugins/tpm ] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-curl -s https://ohmyposh.dev/install.sh | bash -s
-
-#curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
-#sudo rm -rf /opt/nvim
-#sudo tar -C /opt -xzf nvim-linux-x86_64.tar.gz
-
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-wget -O ./gits/delta.deb https://github.com/dandavison/delta/releases/download/0.18.2/git-delta_0.18.2_amd64.deb
-sudo dpkg -i ./gits/delta.deb
-
-wget -O ./gits/glab.deb https://gitlab.com/gitlab-org/cli/-/releases/v1.59.2/downloads/glab_1.59.2_linux_amd64.deb
-sudo dpkg -i ./gits/glab.deb
-
-wget -O ./gits/zoxide.deb https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.8/zoxide_0.9.8-1_amd64.deb
-sudo dpkg -i ./gits/zoxide.deb
-
-# -[x] install go
-# -[x] install nvm
-# -[x] install lazygit
-# -[x] install tmux tpm
-# -[x] install fzf
-# -[x] zoxide
 
