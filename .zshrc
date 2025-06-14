@@ -45,6 +45,7 @@ bindkey "^[[1;5D" backward-word
 source <(fzf --zsh)
 
 alias ls="ls --color=always"
+alias eza="eza --color=always"
 alias less="less -R"
 
 source ~/.zshrc.custom

@@ -18,30 +18,24 @@ function gitlog() {
 }
 
 
-function search_gits() {
-	list_dirs=""
+function gits_search() {
 
-	git_dirs="`find /srv ~ -type d \( -name '.*' -o -name 'gits' -o -path '*/vendor/*' -o -path '*/node_modules/*' \) -prune -iname '.git' -exec dirname {}  \; | xargs realpath -L | sort -n`"
+	git_dirs=""
+	directories=""
 
-	search_dirs=""
-	if [[ -d $1 ]]; then
-		search_dir="`realpath $1`"
-		search_dirs="`find $search_dir -maxdepth 1 -type d`"
-	fi
+	[[ -w /srv ]] && directories=$(echo $directories /srv | xargs)
+	[[ -w ~ ]] && directories=$(echo $directories ~ | xargs)
+	[[ -d $1 ]] && directories=$(echo $directories $1 | xargs)
 
-	if [[ -z $search_dirs ]] && [[ -z $git_dirs ]]; then
-		return 1
-	elif [[ ! -z $search_dirs ]] && [[ ! -z $git_dirs ]]; then
-		list_dirs="$search_dirs\n$git_dirs"
-	elif [[ ! -z $search_dirs ]]; then
-		list_dirs="$search_dirs"
-	elif [[ ! -z $git_dirs ]]; then
-		list_dirs="$git_dirs"
-	fi
+	directories=$(echo "$directories" | awk -F ' ' '{ print $1 "\n" }' | sort -n | uniq | xargs echo -n)
 
-	list_dirs=$(echo "$list_dirs" | sort -n | uniq)
+	[[ ! -z $directories ]] && git_dirs=$(find "$directories" -type d \( -name '.*' -o -name 'gits' -o -path '*/vendor/*' -o -path '*/node_modules/*' \) -prune -iname '.git' -exec dirname {}  \; | xargs realpath -L | sort -n | uniq)
 
-	dir="`echo $list_dirs | fzf --preview="eza -lahF --icons --no-permissions --no-user --no-time --group-directories-first {}"`"
+	[[ -z $git_dirs ]] && return 1
+
+	git_dirs=$(echo "$git_dirs" | sort -n | uniq | xargs -n 1)
+
+	dir=$(echo $git_dirs | fzf --preview="eza --color always -lahF --icons --no-permissions --no-user --no-time --group-directories-first {}")
 
 	[[ ! $dir ]] && return 1
 
@@ -49,17 +43,17 @@ function search_gits() {
 }
 
 function gits () {
-	dir=$(search_gits "$1")
+	dir=$(gits_search "$1")
 	[[ ! $dir ]] && return 1
 	cd $dir
 }
 
-function fancydir() {
+function tmux_selector() {
 
-	dir=$(search_gits "$1")
+	dir=$(gits_search "$1")
 	[[ ! $dir ]] && return 1
 
-	session_name=${$(basename $dir)/./-}
+	session_name=$(basename $dir | tr . _)
 	current_session=$([[ -n "$TMUX" ]] && tmux display-message -p '#S')
 	session_exist=$(tmux list-session 2> /dev/null | awk -F ':' '{ print $1 }' | grep "$session_name")
 
