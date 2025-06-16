@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-os="`cat /etc/os-release | grep -E '^ID' | awk -F '=' '{ print $2 }'`"
+os="`cat /etc/os-release | grep -E '^ID=' | awk -F '=' '{ print $2 }'`"
 target=$1
 
 if [[ -z $os ]]; then
