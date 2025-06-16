@@ -27,9 +27,9 @@ function gits_search() {
 	[[ -w ~ ]] && directories=$(echo $directories ~ | xargs)
 	[[ -d $1 ]] && directories=$(echo $directories $1 | xargs)
 
-	directories=$(echo "$directories" | awk -F ' ' '{ print $1 "\n" }' | sort -n | uniq | xargs echo -n)
+	directories=$(echo "$directories" | sort -n | uniq | xargs -n 1 echo)
 
-	[[ ! -z $directories ]] && git_dirs=$(find "$directories" -type d \( -name '.*' -o -name 'gits' -o -path '*/vendor/*' -o -path '*/node_modules/*' \) -prune -iname '.git' -exec dirname {}  \; | xargs realpath -L | sort -n | uniq)
+	[[ ! -z $directories ]] && git_dirs=$(echo $directories | xargs -I '@@' find @@ -type d \( -name '.*' -o -name 'gits' -o -path '*/vendor/*' -o -path '*/node_modules/*' \) -prune -iname '.git' -exec dirname {}  \; | xargs realpath -L | sort -n | uniq)
 
 	[[ -z $git_dirs ]] && return 1
 
