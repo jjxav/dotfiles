@@ -1,6 +1,9 @@
 .git
 .gitignore
 README.md
+
 gits
-install.sh
 gits/
+
+install
+scripts/

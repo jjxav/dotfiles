@@ -51,7 +51,7 @@ alias less="less -R"
 source ~/.zshrc.custom
 
 eval "$(zoxide init zsh --cmd cd)"
-source <(fzf --zsh)
+source <(gowall completion zsh)
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

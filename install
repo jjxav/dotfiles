@@ -1,40 +1,8 @@
 #!/usr/bin/env bash
 
 os="`cat /etc/os-release | grep -E '^ID=' | awk -F '=' '{ print $2 }'`"
-target=$1
+. ~/dotfiles/scripts/functions.sh
 
-if [[ -z $os ]]; then
-	echo 'OS not set' 1>&2
-	exit 1
-fi
-
-function install () {
-	case $os in
-		arch)
-			sudo pacman -Sy --noconfirm "$@"
-		;;
-		ubuntu)
-			sudo apt install "$@"
-		;;
-		*)
-			echo 'Not a supported os' 1>&2
-			return 1
-	esac
-}
-
-function upgrade() {
-	case $os in
-		arch)
-			sudo pacman -Syy
-		;;
-		ubuntu)
-			sudo apt update
-		;;
-		*)
-			echo 'Not a supported os' 1>&2
-			return 1
-	esac
-}
 
 ####################################################################################################
 ##                                            Arch                                                ##
@@ -43,6 +11,8 @@ function arch () {
 	install git-delta neovim less zoxide rust go lazygit
 
 	if [ $target = 'desktop' ]; then
+		echo "----------------------------------------------------------------------------------------------------\nbla";
+		install cmake meson cpio pkg-config git gcc
 		install hyprland wofi
 		install waybar cava
 		install pipewire pipewire-session-manager pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse wireplumber 
