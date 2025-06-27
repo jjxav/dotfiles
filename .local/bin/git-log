@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+git log --no-merges --oneline -- $1 | \
+	fzf --margin 10% --preview="git show --color {1} -- $1" --color | \
+	awk '{ print $1 }' | \
+	xargs -I {} git show "{}" -- $1
+

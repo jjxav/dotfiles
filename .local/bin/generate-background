@@ -4,8 +4,13 @@
 
 install ffmpeg imagemagick parallel
 
+mkdir -p ~/.config/hypr/theme/backgrounds/
 mkdir -p ~/images/background/processed
 mkdir -p ~/images/background/original
+
+find ~/.config/hypr/theme/backgrounds/ -not -path ~/.config/hypr/theme/backgrounds/ -delete
+find ~/images/background/processed/ -not -path ~/images/background/processed/ -delete
+hyprctl reload > /dev/null
 
 images=$(find ~/images/background/original -type f -exec identify -format "%w %h %i \n" '{}' \; | \
 	awk -F '\n' '$1>2000 || $2>1000' |\
@@ -14,24 +19,22 @@ images=$(find ~/images/background/original -type f -exec identify -format "%w %h
 
 parallel cp {1} ~/images/background/processed/{/} ::: $images
 
-# parallel ffmpeg -loglevel 0 -y -i {1} ~/images/background/processed/{/} -vf "eq=brightness=1:contrast=2" ::: $images
-
 images=$(find ~/images/background/processed -type f)
 
 parallel ~/dotfiles/scripts/hyprland-theme-generator.sh {1} {/.} ::: $images
 
 gowall effects br -f 0.8 --dir ~/images/background/processed --output ~/images/background/processed > /dev/null
-# gowall bg --dir ~/images/background/processed --output ~/images/background/processed > /dev/null
+
+# parallel ffmpeg -loglevel 0 -y -i {1} ~/images/background/processed/{/} -vf "eq=brightness=1:contrast=2" ::: $images
+# parallel magick {1} -blur 0x35 {1} ::: $images
+# gowall invert --dir ~/images/background/processed --output ~/images/background/processed > /dev/null
+# parallel -j 5 gowall bg {} --output {} '>' /dev/null ::: $images
+# gowall convert --dir ~/images/background/processed --output ~/images/background/processed -t shades-of-purple > /dev/null
+# gowall convert --dir ~/images/background/processed --output ~/images/background/processed -t synthwave-84 > /dev/null
 # gowall convert --dir ~/images/background/processed --output ~/images/background/processed -t kanagawa > /dev/null
-# gowall pixelate -s 25 --dir ~/images/background/processed --output ~/images/background/processed > /dev/null
+# gowall pixelate -s 8 --dir ~/images/background/processed --output ~/images/background/processed > /dev/null
 # gowall upscale -s 1 --dir ~/images/background/processed --output ~/images/background/processed > /dev/null
 
 hyprctl reload > /dev/null
 
-hyprctl hyprpaper reload HDMI-A-1,"~/images/background/processed/fern-01.png" > /dev/null
-hyprctl hyprpaper reload HDMI-A-2,"~/images/background/processed/fern-01.png" > /dev/null
-
-hyprctl hyprpaper reload DP-1,"~/images/background/processed/ina-02.png" > /dev/null
-hyprctl hyprpaper reload DP-2,"~/images/background/processed/ina-01.png" > /dev/null
-
-
+~/.local/bin/shuffle-background

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+git_dirs=""
+directories=""
+listing=""
+
+[[ -w /srv ]] && directories=$(echo $directories /srv | xargs)
+[[ -w ~ ]] && directories=$(echo $directories ~ | xargs)
+
+if [[ -d $1 ]]; then
+	directories=$(echo $directories $1 | xargs)
+	listing=$(echo $1 | xargs -n 1 echo)
+fi
+
+directories=$(echo "$directories" | sort -n | uniq | xargs -n 1 echo)
+
+[[ ! -z $directories ]] && git_dirs=$(echo $directories | xargs -I '@@' find @@ -maxdepth 2 -type d \( -name '.*' -o -name 'gits' -o -path '*/vendor/*' -o -path '*/node_modules/*' \) -prune -iname '.git' -exec dirname {}  \; | xargs realpath -L | sort -n | uniq)
+[[ ! -z $listing ]] && git_dirs="$git_dirs $(echo $listing | xargs -I '@@' find @@ -maxdepth 1 -exec realpath -L {} \; | sort -n | uniq)"
+
+[[ -z $git_dirs ]] && exit 1
+
+git_dirs=$(echo "$git_dirs" | sort -n | uniq | xargs -n 1)
+
+dir=$(echo $git_dirs | fzf --preview="eza --color always -lahF --icons --no-permissions --no-user --no-time --group-directories-first {}")
+
+[[ ! $dir ]] && exit 1
+
+echo $dir
+

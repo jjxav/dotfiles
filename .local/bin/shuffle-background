@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+images=$(find ~/images/background/processed -type f -print0 | xargs -0 -n 1 echo)
+
+nbr=$(echo "$images" | wc -l)
+
+[[ $nbr < 3 ]] && exit 1
+
+background1=$(echo "$images" | shuf -r -n 25 | head -n 1)
+images=$(echo "$images" | grep -Fv "$background1")
+
+background2=$(echo "$images" | shuf -r -n 25 | head -n 1)
+images=$(echo "$images" | grep -Fv "$background2")
+
+background3=$(echo "$images" | shuf -r -n 25 | head -n 1)
+images=$(echo "$images" | grep -Fv "$background3")
+
+hyprctl hyprpaper reload HDMI-A-1,"$background1" > /dev/null
+hyprctl hyprpaper reload HDMI-A-2,"$background1" > /dev/null
+
+hyprctl hyprpaper reload DP-1,"$background2" > /dev/null
+hyprctl hyprpaper reload DP-2,"$background3" > /dev/null
+
