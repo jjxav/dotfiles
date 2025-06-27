@@ -42,6 +42,8 @@ bindkey "^[[B" history-search-forward
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 
+bindkey -s ^S 'tmux-selector\n'
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source <(fzf --zsh)
 
