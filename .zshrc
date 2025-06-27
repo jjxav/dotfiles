@@ -35,8 +35,9 @@ autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
-bindkey "$terminfo[kcuu1]" history-search-backward
-bindkey "$terminfo[kcud1]" history-search-forward
+
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
 
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
