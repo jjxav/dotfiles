@@ -10,17 +10,24 @@ os="`cat /etc/os-release | grep -E '^ID=' | awk -F '=' '{ print $2 }'`"
 function arch () {
 	install git-delta neovim less zoxide rust go lazygit
 
-	if [ $target = 'desktop' ]; then
+	install noto-fonts-cjk nerd-fonts
+	yay -S ttf-mplus-git
+
+	if [[ $target == 'desktop' ]]; then
 		echo "----------------------------------------------------------------------------------------------------\nbla";
 		install cmake meson cpio pkg-config git gcc
 		install hyprland wofi
 		install waybar cava
+		install mako
 		install pipewire pipewire-session-manager pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse wireplumber 
 		install lib32-libpipewire libpipewire libwireplumber
 		# sudo yay -Sy --noconfirm xdg-desktop-portal-wayland
 		install pipewire-libcamera 
 		install grim slurp
 		install qt5-wayland qt6-wayland
+
+		# Enable file indexing
+		balooctl6 enable
 	fi
 
 }
@@ -73,7 +80,7 @@ case $os in
 		;;
 esac
 
-install stow zip unzip ripgrep bat tmux zsh jq clang 
+install stow zip unzip ripgrep bat tmux zsh jq clang chafa
 install eza
 
 

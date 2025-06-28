@@ -1,22 +1,39 @@
+
+@define-color black rgba(0, 0, 0, 1);
+@define-color white rgba(255, 255, 255, 1);
+@define-color grey rgba(125, 125, 125, 1);
+@define-color purple rgba(76, 8, 115, 1);
+
+@define-color workspace-selected purple;
+@define-color workspace-has-window rgba(255, 255, 255, 1);
+
+@define-color bg rgba(0, 0, 0, 0.7);
+@define-color bg-widget rgba(35, 35, 35, 0.75);
+@define-color bg-workspace rgba(35, 35, 35, 1);
+@define-color font rgba(255, 255, 255, 1);
+/* @define-color bg-workspace rgba(255, 255, 255, 0.3); */
+
+@define-color popup-bg rgba(0, 0, 0, 1);
+@define-color popup-font rgba(255, 255, 255, 1);
+@define-color popup-border rgba(255, 255, 255, 1);
+@define-color popup-arrow rgba(255, 255, 255, 1);
+@define-color popup-separator rgba(255, 255, 255, 1);
+
 * {
+	/* all: initial; */
     font-family: 'RobotoMono Nerd Font';
     font-size: 16px;
-	color: #ffffff;
+	color: @font;
 	text-shadow: 0px 0px 4px #000000;
 }
 
-button {
-	outline: none;
-}
-
 window#waybar {
-	background: transparent;
+	background: @bg;
+	padding: 0;
     transition-duration: .5s;
 }
 window > box {
-	padding-top: 3px;
-	padding-left: 15px;
-	padding-right: 15px;
+	padding: 0 15px;
 }
 
 widget label,
@@ -27,112 +44,125 @@ widget {
 	border: none;
 }
 
-widget.modules-left {
-	margin-right: 5px;
+.modules-left > widget {
+	/* margin-right: 5px; */
 }
-widget.modules-right {
-	margin-left: 5px;
+.modules-right > widget {
+	/* margin-left: -30px; */
 }
-widget.modules-center {
-	margin-left: 2.5px;
-	margin-right: 2.5px;
+.modules-center > widget {
+	/* margin-left: 2.5px; */
+	/* margin-right: 2.5px; */
 }
 
 widget > label,
 widget > box {
-	min-width: 30px;
-	min-height: 30px;
+
 }
 
+/*##################################################*/
+/*                    Right widget                  */
+/*##################################################*/
+
+box#tray,
 widget > label {
-	background: rgba(25, 25, 25, 0.75);
+	background: @bg-widget;
 	padding-left: 10px;
 	padding-right: 10px;
-	border-radius: 10px;
-	border: 2px solid rgba(125, 125, 125, 1);
 }
 
-widget > box {
-	/* border-top: 3px solid rgba(75, 45, 110, 1); */
+/*##################################################*/
+/*                   Workspaces                     */
+/*##################################################*/
+
+widget > box#workspaces {
 }
 
 widget > box#workspaces button {
-	margin-right: 2.5px;
-	margin-left: 2.5px;
-
-	min-height: 30px;
-	min-width: 22px;
-	/* max-height: 30px; */
-	/* max-width: 30px; */
-	border: 2px solid rgba(125, 125, 125, 1);
-	border-radius: 100%;
+	margin: 0 5px;
 }
 
 widget > box#workspaces button label {
-	text-shadow: none;
-	color: transparent;
+	font-size: 30px;
 }
 
+widget > box#workspaces button.empty {
+}
+
+widget > box#workspaces button.visible.empty {
+}
+
+widget > box#workspaces button:hover {
+}
+
+
+widget > box#workspaces button:hover,
 widget > box#workspaces button.visible {
-	background: transparent;
+}
+
+widget > box#workspaces button.visible.empty {
+
+}
+widget > box#workspaces button.visible {
 }
 
 widget > box#workspaces button.visible label {
-	color: #fff;
-}
-
-widget > box#workspaces button.active {
-	/* background: #FFF; */
-	/* background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 50%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 75%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1) 100%); */
 }
 
 widget > box#workspaces button.active label {
+
 }
 
-/* widget > box#tray { */
-/* 	background: rgba(0, 0, 0, 0.33); */
-/* } */
-/* widget > box#tray widget { */
-/* 	border-bottom: 3px solid rgba(100, 100, 100, 1); */
-/* } */
-/*
+/*##################################################*/
+/*                      Popup                       */
+/*##################################################*/
 
-#workspaces {
-	background: transparent;
-	border: 0;
-}
-#workspaces button {
-	border: 1px solid #888;
-	margin-left: 2px;
-	margin-right: 2px;
-	background: rgba(25, 25, 25, 1);
+/* All hover's */
+decoration {
+	background: @black;
 }
 
-#workspaces button,
-#workspaces button label {
-	min-width: 0;
-	padding: 0;
-	margin: 0;
+/*##################################################*/
+/*                      Tray                       */
+/*##################################################*/
+
+/* Tray's popup */
+decoration,
+box#tray window > decoration {
+	background: @popup-bg;
+	border: 1px solid @popup-border;
+	padding: 5px 10px;
 }
 
-#workspaces button.visible {
-	border: 2px solid #fff;
-	background: rgba(160, 160, 160, 1);
+box#tray window separator {
+	border-top: 1px solid @popup-separator;
+	margin: 5px 0;
 }
 
-#workspaces button.visible,
-#workspaces button.visible label {
-	color: #000;
+box#tray > widget > image {
+	margin: 0 5px;
 }
 
-#workspaces button,
-box.module,
-label.module {
-	border: 1px solid #888;
-	background: rgba(25, 25, 25, 1);
-	min-width: 40px;
-	padding-left: 5px;
-	padding-right: 5px;
+box#tray window {
+	color: @popup-font;
 }
 
-*/
+window.popup arrow {
+	margin: 5px;
+}
+
+window.popup arrow.left {
+	border-right: 10px solid @popup-arrow;
+	border-top: 4px solid transparent;
+	border-bottom: 4px solid transparent;
+}
+window.popup arrow.right {
+	border-left: 10px solid @popup-arrow;
+	border-top: 4px solid transparent;
+	border-bottom: 4px solid transparent;
+}
+
+window.popup menuitem:hover label {
+	/* color: shade(@popup-font, 0.8); */
+	text-decoration: underline;
+}

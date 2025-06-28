@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+part=$(date)
+
+IFS=' ' read -d '' -r -a parts <<< $part
+
+year=${parts[0]}
+month=${parts[1]}
+day=${parts[2]}
+
+day_of_week=${parts[3]}
+
+times=$(date "+%X")
+
+date_string="$year $month $day $day_of_week $times"
+
+
+header=$(cal -s | head -n 1 | xargs)
+# echo $header
+
+
+target=$(date --iso)
+if [[ ! -z $1 ]]; then
+	target=$1
+fi
+
+
+days_name=$(cal -s $target | sed -n 2p | xargs)
+
+first_days_row=$(cal -s $target | sed -n 3p | xargs)
+
+nbr=$(echo $first_days_row | wc -w)
+missing_day=$((7 - $nbr))
+
+for (( i=1; i<=$missing_day; i++ )); do
+	first_days_row="0 ${first_days_row[@]}"
+done
+
+others_days=$(cal -s $target  | tail -n +4 | xargs)
+
+day="$first_days_row $others_days"
+cal=$(echo "$day" | xargs -n 1 | xargs -I '{}' printf '%02i ' {} | xargs | fold -s -w 23 | column --table --table-columns  $(echo $days_name | tr ' ' ',') | sed 's/00/  /g' | tail -n +2)
+
+days_name=$(echo "$days_name" | column --table -o '      ')
+
+printf "$date_string\n$days_name\n$cal" | ~/.config/waybar/nl2tooltip

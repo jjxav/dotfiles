@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 os="`cat /etc/os-release | grep -E '^ID=' | awk -F '=' '{ print $2 }'`"
 
@@ -12,8 +13,10 @@ function install () {
 		arch)
 			pacman -Q "$@" > /dev/null 2> /dev/null
 			installed=$(echo $?)
-			if [[ ! $installed ]]; then
-				sudo pacman -Sy --noconfirm "$@"
+			if [[ ! $installed == 0 ]]; then
+				echo "'$@' where not installed, to be install"
+				sudo pacman -Sy --noconfirm "$@" #> /dev/null
+				echo "'$@' where installed"
 			fi
 		;;
 		ubuntu)
