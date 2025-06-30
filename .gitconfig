@@ -1,13 +1,39 @@
 [user]
 	name = Xavier Legault
 
+[commit]
+	gpgsign = true
+
 [core]
 	excludesFile = ~/.gitignore
 	editor = nvim
 	pager = delta
+	eol = lf
+	safecrlf = true
+
+[log]
+	showSignature = false
+	mailmap = true
+
+[fetch]
+	prune = true
+
+[pull]
+	ff = true
+
+[push]
+	followTags = true
+	gpgSign = if-asked
+
+[rebase]
+	autoSquash = true
+
+[tag]
+	gpgSign = true
+	forceSignAnnotated = true
 
 [rerere]
-	enabled = false
+	enabled = true
 
 [alias]
 	graph = log --graph
@@ -19,7 +45,7 @@
 	diffFilter = delta --color-only
 
 [merge]
-	conflictStyle = zdiff3
+	; conflictStyle = zdiff3
 
 [delta]
 	navigate = true
@@ -53,4 +79,3 @@
 	path = .gitconfig.github.prosomo
 [includeIf "hasconfig:remote.*.url:git@github.com:prosomo/**"]
 	path = .gitconfig.github.prosomo
-

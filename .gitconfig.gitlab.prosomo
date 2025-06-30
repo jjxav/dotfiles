@@ -1,3 +1,7 @@
 
 [user]
 	email = xavier.l@prosomo.com
+
+[include]
+	path = .gitsigned.prosomo
+
