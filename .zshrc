@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 
 export PATH=$HOME/.local/bin:$PATH
 
@@ -54,7 +55,10 @@ alias less="less -R"
 source ~/.zshrc.custom
 
 eval "$(zoxide init zsh --cmd cd)"
-source <(gowall completion zsh)
+
+if gowall --version 2>&1 > /dev/null ; then
+	source <(gowall completion zsh)
+fi
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
