@@ -13,7 +13,7 @@ setopt EXTENDED_HISTORY
 setopt INC_APPEND_HISTORY
 setopt HIST_FIND_NO_DUPS
 
-if oh-my-posh version 2>&1 > /dev/null ; then
+if which oh-my-posh 2>&1 > /dev/null ; then
 	eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/noob.yml)"
 fi
 
@@ -50,8 +50,17 @@ bindkey "^[[1;5D" backward-word
 bindkey -s ^S 'tmux-selector\n'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-if fzf --version 2>&1 > /dev/null ; then
+if which fzf 2>&1 > /dev/null ; then
 	source <(fzf --zsh)
+	export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+	--style full
+	--color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#262626
+	--color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00
+	--color=prompt:#d7005f,spinner:#af5fff,pointer:#af5fff,header:#87afaf
+	--color=border:#262626,label:#aeaeae,query:#d9d9d9
+	--border="sharp" --border-label-pos="0" --preview-window="border-sharp"
+	--padding="0" --margin="0,0" --prompt="> " --marker=">"
+	--pointer="-" --separator="─" --scrollbar="│"'
 fi
 
 alias ls="ls --color=always"
@@ -59,20 +68,11 @@ alias eza="eza --color=always"
 alias less="less -R"
 alias vim=nvim
 
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
-  --color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#262626
-  --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00
-  --color=prompt:#d7005f,spinner:#af5fff,pointer:#af5fff,header:#87afaf
-  --color=border:#262626,label:#aeaeae,query:#d9d9d9
-  --border="sharp" --border-label-pos="0" --preview-window="border-sharp"
-  --padding="1" --margin="3,5" --prompt="> " --marker=">"
-  --pointer="-" --separator="─" --scrollbar="│" --info="right"'
-
-if zoxide --version 2>&1 > /dev/null ; then
+if which zoxide 2>&1 > /dev/null ; then
 	eval "$(zoxide init zsh --cmd cd)"
 fi
 
-if gowall --version 2>&1 > /dev/null ; then
+if which gowall 2>&1 > /dev/null ; then
 	source <(gowall completion zsh)
 fi
 

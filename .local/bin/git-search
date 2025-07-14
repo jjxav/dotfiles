@@ -3,6 +3,7 @@
 git_dirs=""
 directories=""
 listing=""
+new_line=$'\n'
 
 [[ -w /srv ]] && directories=$(echo $directories /srv | xargs)
 [[ -w /srv/Websites/ ]] && directories=$(echo $directories /srv/Websites/ | xargs)
@@ -15,14 +16,15 @@ fi
 
 directories=$(echo "$directories" | sort -n | uniq | xargs -n 1 echo)
 
-[[ ! -z $directories ]] && git_dirs=$(echo "$directories" | xargs -I '@@' find @@ -maxdepth 2 -type d \( -name '.*' -o -name 'gits' -o -path '*/vendor/*' -o -path '*/node_modules/*' \) -prune -iname '.git' -exec dirname {}  \; | xargs realpath -L | sort -n | uniq)
-[[ ! -z $listing ]] && git_dirs="$git_dirs $(echo "$listing" | xargs -I '@@' find @@ -maxdepth 1 -exec realpath -L {} \; | sort -n | uniq)"
+tmux has-session > /dev/null 2>&1 && git_dirs=$(tmux list-sessions -F "#{session_path}" 2> /dev/null | xargs -n 1)
+[[ ! -z $directories ]] && git_dirs="$git_dirs$new_line$(echo "$directories" | xargs -I '@@' find @@ -maxdepth 2 -type d \( -name '.*' -o -name 'gits' -o -path '*/vendor/*' -o -path '*/node_modules/*' \) -prune -iname '.git' -exec dirname {}  \; | xargs realpath -L)"
+[[ ! -z $listing ]] && git_dirs="$git_dirs$new_line$(echo "$listing" | xargs -I '@@' find @@ -maxdepth 1 -exec realpath -L {} \;)"
 
 [[ -z $git_dirs ]] && exit 1
 
 git_dirs=$(echo "$git_dirs" | sort -n | uniq | xargs -n 1)
 
-dir=$(echo "$git_dirs" | fzf --preview="eza --color always -lahF --icons --no-permissions --no-user --no-time --group-directories-first {}")
+dir=$(echo "$git_dirs" | fzf --list-label="Directories & Tmux sessions" --input-label="Search your directories" --preview-label="Directories Listing" --preview="eza --color always -lahF --icons --no-permissions --no-user --no-time --group-directories-first {}")
 
 [[ ! $dir ]] && exit 1
 
