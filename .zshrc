@@ -13,7 +13,9 @@ setopt EXTENDED_HISTORY
 setopt INC_APPEND_HISTORY
 setopt HIST_FIND_NO_DUPS
 
-eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/noob.yml)"
+if oh-my-posh version 2>&1 > /dev/null ; then
+	eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/noob.yml)"
+fi
 
 unsetopt menu_complete   # do not autoselect the first completion entry
 unsetopt flowcontrol
@@ -48,15 +50,27 @@ bindkey "^[[1;5D" backward-word
 bindkey -s ^S 'tmux-selector\n'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source <(fzf --zsh)
+if fzf --version 2>&1 > /dev/null ; then
+	source <(fzf --zsh)
+fi
 
 alias ls="ls --color=always"
 alias eza="eza --color=always"
 alias less="less -R"
+alias vim=nvim
 
-source ~/.zshrc.custom
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+  --color=fg:-1,fg+:#d0d0d0,bg:-1,bg+:#262626
+  --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#87ff00
+  --color=prompt:#d7005f,spinner:#af5fff,pointer:#af5fff,header:#87afaf
+  --color=border:#262626,label:#aeaeae,query:#d9d9d9
+  --border="sharp" --border-label-pos="0" --preview-window="border-sharp"
+  --padding="1" --margin="3,5" --prompt="> " --marker=">"
+  --pointer="-" --separator="─" --scrollbar="│" --info="right"'
 
-eval "$(zoxide init zsh --cmd cd)"
+if zoxide --version 2>&1 > /dev/null ; then
+	eval "$(zoxide init zsh --cmd cd)"
+fi
 
 if gowall --version 2>&1 > /dev/null ; then
 	source <(gowall completion zsh)
@@ -66,4 +80,3 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-source ~/.zshrc.custom
