@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+target=$1
+
 os="`cat /etc/os-release | grep -E '^ID=' | awk -F '=' '{ print $2 }'`"
 . ~/dotfiles/scripts/functions.sh
 
@@ -9,9 +11,11 @@ os="`cat /etc/os-release | grep -E '^ID=' | awk -F '=' '{ print $2 }'`"
 ####################################################################################################
 function arch () {
 	install git-delta neovim less zoxide rust go lazygit
+	install python-pip
 
 	install noto-fonts-cjk nerd-fonts
-	yay -S ttf-mplus-git
+	yay -Sy --noconfirm ttf-mplus-git
+	yay -Sy --noconfirm jqp-bin
 
 	if [[ $target == 'desktop' ]]; then
 		echo "----------------------------------------------------------------------------------------------------\nbla";
@@ -19,6 +23,7 @@ function arch () {
 		install hyprland wofi
 		install waybar cava
 		install mako
+		install uwsm libnewt ly
 		install pipewire pipewire-session-manager pipewire-alsa pipewire-audio pipewire-jack pipewire-pulse wireplumber 
 		install lib32-libpipewire libpipewire libwireplumber
 		# sudo yay -Sy --noconfirm xdg-desktop-portal-wayland
@@ -28,6 +33,10 @@ function arch () {
 
 		# Enable file indexing
 		balooctl6 enable
+
+		systemctl enable ly.service > /dev/null
+		systemctl disable getty@tty2.service > /dev/null
+		systemctl disable DISPLAY_MANAGER 2>&1 > /dev/null
 	fi
 
 }
@@ -69,7 +78,7 @@ function unbuntu() {
 ##                                          Install                                               ##
 ####################################################################################################
 
-upgrade
+upgrade 2>&1 > /dev/null
 
 case $os in
 	arch)
@@ -87,4 +96,6 @@ install eza
 curl -s https://ohmyposh.dev/install.sh | bash -s
 
 [ ! -d ~/.tmux/plugins/tpm ] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+sudo localectl set-locale LC_TIME=ja_JP.UTF-8
 
