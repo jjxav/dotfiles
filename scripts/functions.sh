@@ -12,8 +12,9 @@ function install () {
 	case $os in
 		arch)
 			pacman -Q "$@" > /dev/null 2> /dev/null
-			installed=$(echo $?)
-			if [[ ! $installed == 0 ]]; then
+			installed=$?
+			echo $installed
+			if [[ ! $installed = 0 ]]; then
 				echo "'$@' where not installed, to be install"
 				sudo pacman -Sy --noconfirm "$@" #> /dev/null
 				echo "'$@' where installed"
