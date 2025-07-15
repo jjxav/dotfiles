@@ -10,6 +10,7 @@ gits/
 !.config/cava
 !.config/ohmyposh
 !.config/hypr
+.config/hypr/theme/backgrounds
 !.config/pipewire
 !.config/wireplumber
 !.config/waybar
