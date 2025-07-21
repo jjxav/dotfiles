@@ -5,17 +5,33 @@ directories=""
 listing=""
 new_line=$'\n'
 
-[[ -w /srv ]] && directories=$(echo $directories /srv | xargs)
-[[ -w /srv/Websites/ ]] && directories=$(echo $directories /srv/Websites/ | xargs)
-[[ -w ~ ]] && directories=$(echo $directories ~ | xargs)
+[[ -w /srv ]] && directories=$(echo "$directories /srv" | xargs)
+
+if [[ -w ~/project ]]; then
+	directories=$(echo "$directories $HOME/project" | xargs)
+	listing=$(echo "$listing $HOME/project" | xargs)
+fi
+
+if [[ -w ~/school ]]; then
+	directories=$(echo "$directories $HOME/school" | xargs)
+	listing=$(echo "$listing $HOME/school" | xargs)
+fi
+
+if [[ -w /srv/Websites/ ]]; then
+	directories=$(echo "$directories /srv/Websites/" | xargs)
+	listing=$(echo "$listing /srv/Websites/" | xargs)
+fi
+
+[[ -w $HOME ]] && directories=$(echo "$directories $HOME" | xargs)
 
 if [[ -d $1 ]]; then
 	directories=$(echo $directories $1 | xargs)
 	listing=$(echo $1 | xargs -n 1 echo)
 fi
 
-directories=$(echo "$directories" | sort -n | uniq | xargs -n 1 echo)
 
+directories=$(echo "$directories" | sort -n | uniq | xargs -n 1 echo)
+listing=$(echo "$listing" | sort -n | uniq | xargs -n 1 echo)
 tmux has-session > /dev/null 2>&1 && git_dirs=$(tmux list-sessions -F "#{session_path}" 2> /dev/null | xargs -n 1)
 [[ ! -z $directories ]] && git_dirs="$git_dirs$new_line$(echo "$directories" | xargs -I '@@' find @@ -maxdepth 2 -type d \( -name '.*' -o -name 'gits' -o -path '*/vendor/*' -o -path '*/node_modules/*' \) -prune -iname '.git' -exec dirname {}  \; | xargs realpath -L)"
 [[ ! -z $listing ]] && git_dirs="$git_dirs$new_line$(echo "$listing" | xargs -I '@@' find @@ -maxdepth 1 -exec realpath -L {} \;)"

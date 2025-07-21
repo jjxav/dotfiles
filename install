@@ -10,7 +10,17 @@ os="`cat /etc/os-release | grep -E '^ID=' | awk -F '=' '{ print $2 }'`"
 ##                                            Arch                                                ##
 ####################################################################################################
 function arch () {
-	install git-delta neovim less zoxide rust go lazygit
+	if ! which yay 2>&1 > /dev/null; then
+		sudo pacman -S --needed git base-devel
+		git clone https://aur.archlinux.org/yay.git ./gits/yay
+		pushd ./gits/yay
+		makepkg -si
+		popd
+	fi
+
+	install neovim zoxide fzf go rust man
+	install nvm pyenv python-pdm
+	install git less git-delta lazygit glab github-cli
 	install python-pip
 
 	install noto-fonts-cjk nerd-fonts
@@ -74,6 +84,8 @@ function unbuntu() {
 	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz -O ./gits/nvim-linux.tar.gz/
 	sudo rm -rf /opt/nvim
 	sudo tar -C /opt -xzf ./gits/nvim-linux.tar.gz
+
+	# @TODO: install pyenv
 }
 
 
@@ -96,10 +108,12 @@ esac
 install stow zip unzip ripgrep bat tmux zsh jq clang chafa
 install eza
 
-
 curl -s https://ohmyposh.dev/install.sh | bash -s
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
 [ ! -d ~/.tmux/plugins/tpm ] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 sudo localectl set-locale LC_TIME=ja_JP.UTF-8
+chsh -s $(which zsh)
+[[ ! -z $ZSH_VERSION  ]] && zsh
 
