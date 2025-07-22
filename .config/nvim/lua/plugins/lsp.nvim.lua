@@ -29,6 +29,7 @@ local servers = {
 		},
 		environment = { phpVersion = '8.4.0' }
 	},
+	rust_analyzer = {},
 
 	lua_ls = {
 		Lua = {
@@ -40,18 +41,6 @@ local servers = {
 }
 
 return {
-	{
-		-- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-		-- used for completion, annotations and signatures of Neovim apis
-		'folke/lazydev.nvim',
-		ft = 'lua',
-		opts = {
-			library = {
-				-- Load luvit types when the `vim.uv` word is found
-				{ path = 'luvit-meta/library', words = { 'vim%.uv' } },
-			},
-		},
-	},
 	{
 		'neovim/nvim-lspconfig',
 		dependencies = {
@@ -86,13 +75,12 @@ return {
 
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_formatting) then
+					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_formatting, event.buf) then
 						set('<leader>ff', vim.lsp.buf.format, '[F]ile [F]ormat')
-						vim.api.nvim_buf_create_user_command(event.buf, 'Format',
-							function() vim.lsp.buf.format({ buffer = event.buf }) end, {})
+						vim.api.nvim_buf_create_user_command(event.buf, 'Format', function() vim.lsp.buf.format({ buffer = event.buf }) end, {})
 					end
 
-					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
 						local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
 
 						vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -116,7 +104,7 @@ return {
 					end
 
 
-					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
 						set(
 							'<leader>th',
 							function()

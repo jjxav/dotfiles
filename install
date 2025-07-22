@@ -18,7 +18,7 @@ function arch () {
 		popd
 	fi
 
-	install neovim zoxide fzf go rust man
+	install neovim zoxide fzf go man
 	install nvm pyenv python-pdm
 	install git less git-delta lazygit glab github-cli
 	install python-pip
@@ -113,7 +113,10 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
 [ ! -d ~/.tmux/plugins/tpm ] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+if ! type rustup; then
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
+
 sudo localectl set-locale LC_TIME=ja_JP.UTF-8
-chsh -s $(which zsh)
-[[ ! -z $ZSH_VERSION  ]] && zsh
+mkdir -p .zfunc
 
