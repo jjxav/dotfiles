@@ -38,7 +38,7 @@ blocks:
     type: git
     style: plain
     foreground: p:purple
-    template: "<p:white>as</> {{ if .User.Email }}{{ .User.Email }}{{ else }}<p:red>N/A</>{{ end }} "
+    template: '<p:white>as</> {{ if .User.Email }}{{ replaceP ".*?@" .User.Email "@" }}{{ else }}<p:red>N/A</>{{ end }} '
   - properties: {}
     type: session
     style: plain
