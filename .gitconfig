@@ -63,6 +63,8 @@
 ; Profesional
 [includeIf "hasconfig:remote.*.url:git@gitlab.com:prosomo/**"]
 	path = .gitconfig.gitlab.prosomo
+[includeIf "hasconfig:remote.*.url:git@gitlab.rcgtconsulting.io:*/**"]
+	path = .gitconfig.gitlab.prosomo
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;                     GitHub                     ;
