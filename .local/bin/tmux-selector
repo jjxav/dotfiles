@@ -7,7 +7,7 @@ dir=$($SCRIPT_DIR/git-search "$1")
 
 session_name=$(basename $dir | tr . _)
 current_session=$([[ -n "$TMUX" ]] && tmux display-message -p '#S')
-session_exist=$(tmux list-session 2> /dev/null | awk -F ':' '{ print $1 }' | grep "$session_name")
+session_exist=$(tmux list-session 2> /dev/null | awk -F ':' '{ print $1 }' | grep "^$session_name$")
 
 if [ ! "$TMUX" ] && [ ! "$session_exist" ]; then
 	tmux new-session -ds "$session_name" -c $dir -n "vim" "nvim ."

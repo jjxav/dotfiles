@@ -2,6 +2,7 @@
 
 palette:
   blue: "#5FD7FF"
+  red: "#A8323E"
   green: "#87FF00"
   orange: "#D75F00"
   purple: "#7E46B6"
@@ -32,6 +33,12 @@ blocks:
     foreground: p:green
     type: path
     style: plain
+  - properties:
+      fetch_user: true
+    type: git
+    style: plain
+    foreground: p:purple
+    template: "<p:white>as</> {{ if .User.Email }}{{ .User.Email }}{{ else }}<p:red>N/A</>{{ end }} "
   - properties: {}
     type: session
     style: plain
