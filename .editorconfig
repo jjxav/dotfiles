@@ -7,6 +7,10 @@ indent_style = tab
 insert_final_newline = true
 end_of_line = lf
 
-[*{.json,.yaml,.toml}]
+[*{.json,.yml,.yaml,.toml}]
+indent_style = space
+
+[*.{yaml,yml}]
+indent_size = 2
 indent_style = space
 
