@@ -18,14 +18,37 @@ function arch () {
 		popd
 	fi
 
-	install neovim zoxide fzf go man
-	install nvm pyenv python-pdm
-	install git less git-delta lazygit glab github-cli
-	install python-pip
+	install git git-delta lazygit
+	install glab github-cli
+	install less man zoxide fzf
+	install neovim
+	yay -Sy --noconfirm jqp-bin
 
+	#
+	# Pyhton
+	#
+	install pyenv python-pdm python-pip uv
+
+	#
+	# JS/TS
+	#
+	install nvm
+
+	#
+	# Go
+	#
+	install go
+
+	#
+	# Rust
+	#
+	install rustup
+
+	#
+	# Fonts
+	#
 	install noto-fonts-cjk nerd-fonts
 	yay -Sy --noconfirm ttf-mplus-git
-	yay -Sy --noconfirm jqp-bin
 
 	if [[ $target == 'desktop' ]]; then
 		echo "----------------------------------------------------------------------------------------------------\nbla";
