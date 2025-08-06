@@ -6,6 +6,7 @@ palette:
   green: "#87FF00"
   orange: "#D75F00"
   purple: "#7E46B6"
+  dark_purple: "#432561"
   white: "#ffffff"
 transient_prompt:
   template: "λ "
@@ -62,6 +63,16 @@ blocks:
     foreground: p:blue
     type: git
     style: plain
+  - properties:
+      fetch_virtual_env: true
+      fetch_version: true
+    type: python
+    style: diamond
+    leading_diamond: ""
+    trailing_diamond: 
+    foreground: p:white
+    background: p:dark_purple
+    template: "{{ if .Error }}{{ else }}  {{ .Venv }}@{{ .Full }} {{ end }}"
   newline: true
 - type: rprompt
   alignment: left
