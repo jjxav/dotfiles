@@ -37,6 +37,13 @@ if [ -s $HOME/.cargo/env ]; then
 	rustup completions zsh cargo > ~/.zfunc/_rustup
 fi
 
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+if which pyenv 2>&1 > /dev/null ; then
+	eval "$(pyenv init - zsh)"
+	eval "$(pyenv virtualenv-init - zsh)"
+fi
+
 if which oh-my-posh 2>&1 > /dev/null ; then
 	eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/noob.yml)"
 fi
