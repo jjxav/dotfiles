@@ -44,6 +44,10 @@ if which pyenv 2>&1 > /dev/null ; then
 	eval "$(pyenv virtualenv-init - zsh)"
 fi
 
+if which uv 2>&1 > /dev/null ; then
+	eval "$(uv generate-shell-completion zsh)"
+fi
+
 if which oh-my-posh 2>&1 > /dev/null ; then
 	eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/noob.yml)"
 fi
