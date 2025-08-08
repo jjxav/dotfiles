@@ -1,5 +1,6 @@
 [user]
 	name = Xavier Legault
+	useConfigOnly = true
 
 [commit]
 	gpgsign = true
