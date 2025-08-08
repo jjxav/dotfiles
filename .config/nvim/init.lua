@@ -35,8 +35,12 @@ vim.g.smartindent = false
 vim.o.scrolloff = 4
 
 vim.o.foldenable = false
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 
-vim.wo.wrap = false
+vim.o.wrap = false
+vim.o.breakindent = true
+vim.o.showbreak = ''
 
 vim.opt.list = true
 vim.opt.listchars = { tab = '   ', trail = '·', nbsp = '␣' }
@@ -47,3 +51,5 @@ vim.opt.cursorline = true
 
 vim.diagnostic.config({ virtual_text = true })
 
+vim.o.textwidth = 120
+-- vim.o.colorcolumn = "100"

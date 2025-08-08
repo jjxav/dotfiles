@@ -8,6 +8,9 @@ return {
 			width = { 'full', 'full', 'block', 'block', 'block', 'block' },
 			border = true,
 			border_virtual = true,
+			above = ' ',
+			below = ' ',
+			backgrounds = {},
 		},
 		indent = {
 			enabled = true,
@@ -16,6 +19,8 @@ return {
 		},
 		code = {
 			border = 'thick',
+			backgrounds = {},
+			disable_background = true,
 		}
 	},
 
