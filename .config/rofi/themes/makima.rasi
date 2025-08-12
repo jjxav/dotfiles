@@ -1,0 +1,137 @@
+/**
+ * ROFI Color theme
+ * User: Qball
+ * Copyright: Dave Davenport
+ */
+
+* {
+    foreground:  #5B241E;
+	background: #C36658;
+    backlight:   #ccffeedd;
+
+	btn-border: #000;
+
+	image: url("~/.config/rofi/themes/makima.png", height);
+
+    background-color:  transparent;
+    transparent: "real";
+    font: "Source Code Pro 12";
+}
+
+
+window {
+	location: center;
+	anchor: center;
+	background-color: @background;
+	orientation: horizontal;
+	children: [layout];
+}
+
+layout {
+	background-color: @background;
+	children: [ search, layout-inner ];
+	orientation: vertical;
+	spacing: 0;
+}
+
+layout-inner {
+	spacing: 0;
+	children: [ background, mainbox ];
+	orientation: horizontal;
+}
+
+mode-switcher {
+	children: [button];
+	padding: 15px;
+	spacing: 10px;
+}
+
+button {
+	border: 1px solid;
+	border-color: @btn-border;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+search {
+	children: [ inputbar ];
+	padding: 10px;
+	expand: false;
+}
+
+inputbar {
+	spacing: 0;
+	children: [prompt, ponctuation, entry, fr, ns, ci];
+}
+
+prompt {
+	expand: false;
+}
+
+background {
+	width: 21em;
+	expand: false;
+	background-image: @image;
+}
+
+mainbox {
+	children: [message, listview, mode-switcher];
+}
+
+listview {
+	columns: 1;
+	padding: 20px;
+	spacing: 10px;
+	fixed-height: true;
+	lines: 10;
+	scrollbar: true;
+	fixed-columns: true;
+}
+
+scrollbar {
+	// handle-color: @black;
+	handle-rounded-corners: true;
+	handle-width: 5px;
+}
+
+ponctuation {
+	expand: false;
+	margin: 0 5px 0 0;
+	children: [ textbox-ponctuation ];
+}
+
+
+textbox-ponctuation {
+	content: ":";
+}
+
+inputbar {
+
+}
+
+entry {
+	cursor: pointer;
+	placeholder: "What do you want filthy mutt";
+	// placeholder-color: #999;
+}
+
+element {
+	padding: 5px 10px 5px;
+}
+
+element selected {
+    // background-color: #eee;
+}
+
+element-icon {
+	expand: false;
+	size: 25;
+	margin: 0 10px 0 0;
+}
+
+element-text {
+	color: @foreground;
+	highlight: underline #000;
+	vertical-align: 0.5;
+}
+	
