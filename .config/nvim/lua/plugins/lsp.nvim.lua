@@ -60,12 +60,62 @@ return {
 		config = function()
 			vim.api.nvim_create_autocmd('LspAttach', {
 				group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
+				nested = true,
 				callback = function(event)
 					local builtin = require('telescope.builtin')
 
 					local set = function(keys, func, desc, mode)
 						mode = mode or 'n'
 						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+					end
+
+					local register = function(client, bufnr)
+						if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_formatting, bufnr) then
+							vim.api.nvim_buf_create_user_command(
+								bufnr,
+								'Format',
+								function() vim.lsp.buf.format({ buffer = bufnr }) end,
+								{}
+							)
+							set('<leader>ff', vim.lsp.buf.format, '[F]ile [F]ormat')
+						end
+
+						if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_rangeFormatting, bufnr) then
+							set('<leader>ff', vim.lsp.buf.format, '[F]ile Range [F]ormat', 'v')
+						end
+
+						if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, bufnr) then
+							local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
+
+							vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+								buffer = event.buf,
+								group = highlight_augroup,
+								callback = vim.lsp.buf.document_highlight,
+							})
+							vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+								buffer = event.buf,
+								group = highlight_augroup,
+								callback = vim.lsp.buf.clear_references,
+							})
+
+							vim.api.nvim_create_autocmd('LspDetach', {
+								group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
+								callback = function(event2)
+									vim.lsp.buf.clear_references()
+									vim.api.nvim_clear_autocmds { group = 'lsp-highlight', buffer = event2.buf }
+								end,
+							})
+						end
+
+						if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, bufnr) then
+							set(
+								'<leader>th',
+								function()
+									vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+								end,
+								'[T]oggle Inlay [H]ints'
+							)
+						end
 					end
 
 					set('gd', builtin.lsp_definitions, '[G]oto [D]efinition')
@@ -80,46 +130,32 @@ return {
 
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
 
-					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_formatting, event.buf) then
-						set('<leader>ff', vim.lsp.buf.format, '[F]ile [F]ormat')
-						vim.api.nvim_buf_create_user_command(event.buf, 'Format', function() vim.lsp.buf.format({ buffer = event.buf }) end, {})
+					if client then
+						register(client, event.buf)
 					end
 
-					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
-						local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
-
-						vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-							buffer = event.buf,
-							group = highlight_augroup,
-							callback = vim.lsp.buf.document_highlight,
-						})
-						vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-							buffer = event.buf,
-							group = highlight_augroup,
-							callback = vim.lsp.buf.clear_references,
-						})
-
-						vim.api.nvim_create_autocmd('LspDetach', {
-							group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
-							callback = function(event2)
-								vim.lsp.buf.clear_references()
-								vim.api.nvim_clear_autocmds { group = 'lsp-highlight', buffer = event2.buf }
-							end,
-						})
-					end
-
-
-					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
-						set(
-							'<leader>th',
-							function()
-								vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-							end,
-							'[T]oggle Inlay [H]ints'
-						)
-					end
+					-- Add a handler for when a LSP add capability after attaching
+					vim.lsp.handlers['client/registerCapability'] = (function(overridden)
+						return function(err, res, ctx)
+							local result = overridden(err, res, ctx)
+							local handler_client = vim.lsp.get_client_by_id(ctx.client_id)
+							if not handler_client then
+								return
+							end
+							for bufnr, _ in pairs(handler_client.attached_buffers) do
+								register(handler_client, bufnr)
+							end
+							return result
+						end
+					end)(vim.lsp.handlers['client/registerCapability'])
 				end,
 			})
+
+			-- vim.api.nvim_create_autocmd('LspNotify', {
+			-- 	callback = function(args)
+			-- 		print(vim.inspect(args))
+			-- 	end
+			-- })
 
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, { 'stylua' })
@@ -193,7 +229,7 @@ return {
 				ensure_installed = { 'php' },
 				automatic_installation = false,
 				handlers = {
-					function (config)
+					function(config)
 						require('mason-nvim-dap').default_setup(config)
 					end
 				}
