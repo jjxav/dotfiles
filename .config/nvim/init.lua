@@ -49,7 +49,11 @@ vim.opt.inccommand = 'split'
 
 vim.opt.cursorline = true
 
-vim.diagnostic.config({ virtual_text = true })
+vim.diagnostic.config({
+	virtual_text = false,
+	virtual_lines = true,
+	severity_sort = true,
+})
 
 vim.o.textwidth = 120
 -- vim.o.colorcolumn = "100"
