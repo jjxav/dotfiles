@@ -74,7 +74,7 @@ return {
 			-- map({ 'o', 'x' }, 'ih', gitsigns.select_hunk)
 
 			-- Document actions
-			map('n', '<leader>gb', gitsigns.blame, { desc = '[D]ocument [B]lame' })
+			map('n', '<leader>gbo', gitsigns.blame, { desc = '[D]ocument [B]lame [O]pen' })
 		end
 	}
 }

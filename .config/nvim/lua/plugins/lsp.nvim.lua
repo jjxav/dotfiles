@@ -72,8 +72,8 @@ return {
 					-- local lsp_builtin = vim.lsp.buf
 
 					local set = function(keys, func, desc, mode)
-						mode = mode or 'n'
-						vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+						local _set = require('jjxav.helper').keymap.set
+						_set(keys, func, 'LSP: ' .. desc, mode, { buffer = event.buf })
 					end
 
 					local register = function(client, bufnr)

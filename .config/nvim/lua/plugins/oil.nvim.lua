@@ -3,7 +3,7 @@ return {
 	dependencies = { { "echasnovski/mini.icons", opts = {} } },
 	config = function()
 		local builtin = require("oil")
-		local set = vim.keymap.set
+		local set = require('jjxav.helper').keymap.set
 
 		-- helper function to parse output
 		local function parse_output(proc)
@@ -77,6 +77,6 @@ return {
 			watch_for_changes = true,
 		})
 
-		set('n', '-', ':Oil<CR>', { desc = '[C]urrent [D]ir' })
+		set('-', ':Oil<CR>', 'Back One Dir')
 	end,
 }

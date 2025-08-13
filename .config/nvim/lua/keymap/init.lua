@@ -1,15 +1,7 @@
 require("keymap.lua-exec")
 require("keymap.chmod")
 
-local set = function(keys, func, desc, mode, opts)
-	local desc_option = { desc = desc }
-	mode = mode or 'n'
-	opts = opts or {}
-
-	opts = vim.tbl_extend('error', opts, desc_option)
-
-	vim.keymap.set(mode, keys, func, opts)
-end
+local set = require('jjxav/helper').keymap.set
 
 set('<leader>fp', vim.cmd.bprevious, 'Go to previous buffer')
 set('<leader>fn', vim.cmd.bnext, 'Go to next buffer')

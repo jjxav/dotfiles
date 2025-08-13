@@ -35,8 +35,7 @@ vim.g.smartindent = false
 vim.o.scrolloff = 4
 
 vim.o.foldenable = false
-vim.o.foldmethod = 'expr'
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldlevel = 100
 
 vim.o.wrap = false
 vim.o.breakindent = true

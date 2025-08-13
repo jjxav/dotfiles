@@ -19,7 +19,6 @@ return {
 		},
 		code = {
 			border = 'thick',
-			backgrounds = {},
 			disable_background = true,
 		}
 	},

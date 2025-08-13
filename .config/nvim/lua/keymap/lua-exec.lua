@@ -1,6 +1,6 @@
 local function set(mode, keys, cmd, desc)
-	local _set = vim.keymap.set
-	_set(mode, keys, cmd, { buffer = true, silent = true, desc = desc })
+	local _set = require('jjxav.helper').keymap.set
+	_set(keys, cmd, desc, mode, { buffer = true, silent = true })
 end
 
 local lua_keymap = vim.api.nvim_create_augroup('lua-keymap', { clear = true })
