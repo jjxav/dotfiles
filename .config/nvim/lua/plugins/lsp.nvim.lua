@@ -58,11 +58,18 @@ return {
 
 		},
 		config = function()
+			vim.keymap.del('n', 'grn')
+			vim.keymap.del({ 'n', 'v' }, 'gra')
+			vim.keymap.del('n', 'grr')
+			vim.keymap.del('n', 'gri')
+			vim.keymap.del('n', 'grt')
+
 			vim.api.nvim_create_autocmd('LspAttach', {
 				group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
 				nested = true,
 				callback = function(event)
 					local builtin = require('telescope.builtin')
+					-- local lsp_builtin = vim.lsp.buf
 
 					local set = function(keys, func, desc, mode)
 						mode = mode or 'n'
@@ -70,7 +77,11 @@ return {
 					end
 
 					local register = function(client, bufnr)
-						if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_formatting, bufnr) then
+						if not client then
+							return
+						end
+
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_formatting, bufnr) then
 							vim.api.nvim_buf_create_user_command(
 								bufnr,
 								'Format',
@@ -80,11 +91,11 @@ return {
 							set('<leader>ff', vim.lsp.buf.format, '[F]ile [F]ormat')
 						end
 
-						if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_rangeFormatting, bufnr) then
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_rangeFormatting, bufnr) then
 							set('<leader>ff', vim.lsp.buf.format, '[F]ile Range [F]ormat', 'v')
 						end
 
-						if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, bufnr) then
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, bufnr) then
 							local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
 
 							vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -107,7 +118,7 @@ return {
 							})
 						end
 
-						if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, bufnr) then
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, bufnr) then
 							set(
 								'<leader>th',
 								function()
@@ -116,17 +127,63 @@ return {
 								'[T]oggle Inlay [H]ints'
 							)
 						end
+
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_foldingRange, bufnr) then
+							vim.o.foldmethod = 'expr'
+							vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+						else
+							vim.o.foldmethod = 'manual'
+						end
+
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_rename, bufnr) then
+							set('<leader>cr', vim.lsp.buf.rename, '[C]ursor [R]ename')
+						end
+
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_codeAction, bufnr) then
+							set('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+						end
+
+						if client:supports_method(vim.lsp.protocol.Methods.workspaceSymbol_resolve, bufnr) then
+							set('<leader>ws', builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+						end
+
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentSymbol, bufnr) then
+							set('<leader>sd', builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
+						end
+
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_definition, bufnr) then
+							set('gd', builtin.lsp_definitions, '[G]oto [D]efinition')
+						end
+
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_typeDefinition, bufnr) then
+							set('<leader>D', builtin.lsp_type_definitions, 'Type [D]efinition')
+						end
+
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_declaration, bufnr) then
+							set('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+						end
+
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_implementation, bufnr) then
+							set('gI', builtin.lsp_implementations, '[G]oto [I]mplementation')
+						end
+
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_references, bufnr) then
+							set('gr', builtin.lsp_references, '[G]oto [R]eferences')
+						end
+
+						-- maybe textDocument_inlayHint, textDocument_signatureHelp
 					end
 
-					set('gd', builtin.lsp_definitions, '[G]oto [D]efinition')
-					set('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-					set('gr', builtin.lsp_references, '[G]oto [R]eferences')
-					set('gI', builtin.lsp_implementations, '[G]oto [I]mplementation')
-					set('<leader>D', builtin.lsp_type_definitions, 'Type [D]efinition')
-					set('<leader>ds', builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
-					set('<leader>ws', builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-					set('<leader>cr', vim.lsp.buf.rename, '[C]ursor [R]ename')
-					set('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+					-- Mapping to remove to be mapped else where
+					--[[
+					- "grn" is mapped in Normal mode to |vim.lsp.buf.rename()|
+					- "gra" is mapped in Normal and Visual mode to |vim.lsp.buf.code_action()|
+					- "grr" is mapped in Normal mode to |vim.lsp.buf.references()|
+					- "gri" is mapped in Normal mode to |vim.lsp.buf.implementation()|
+					- "grt" is mapped in Normal mode to |vim.lsp.buf.type_definition()|
+					- "gO" is mapped in Normal mode to |vim.lsp.buf.document_symbol()|
+					- CTRL-S is mapped in Insert mode to |vim.lsp.buf.signature_help()|
+					]]
 
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
 
@@ -167,7 +224,6 @@ return {
 				ensure_installed = ensure_installed
 			}
 
-			---@diagnostic disable-next-line: missing-fields
 			require('mason-lspconfig').setup {
 				handlers = {
 					function(server_name)
@@ -298,7 +354,8 @@ return {
 
 			dap.setup()
 
-			vim.keymap.set('n', '<leader>do', dap.toggle)
+			local set = require('jjxav.helper').keymap.set
+			set('<leader>do', dap.toggle)
 		end,
 	},
 }
