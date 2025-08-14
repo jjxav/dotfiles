@@ -18,63 +18,64 @@ return {
 				vim.keymap.set(mode, l, r, opts)
 			end
 
+			local set = require('jjxav.helper').keymap.set
+
 			-- Navigation
-			map('n', ']c', function()
+			set(']c', function()
 				if vim.wo.diff then
 					vim.cmd.normal({ ']c', bang = true })
 				else
+					---@diagnostic disable-next-line
 					gitsigns.nav_hunk('next')
 				end
-			end, { desc = 'Hunk Next' })
-
-			map('n', '[c', function()
+			end, 'Hunk Next')
+			set('[c', function()
 				if vim.wo.diff then
 					vim.cmd.normal({ '[c', bang = true })
 				else
+					---@diagnostic disable-next-line
 					gitsigns.nav_hunk('prev')
 				end
-			end, { desc = ' Hunk Previous' })
+			end, ' Hunk Previous')
 
 			-- Actions
-			map('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'Hunk Stage' })
-			map('n', '<leader>hr', gitsigns.reset_hunk, { desc = 'Hunk Reset' })
+			set('<leader>hs', gitsigns.stage_hunk, 'Hunk Stage')
+			set('<leader>hr', gitsigns.reset_hunk, 'Hunk Reset')
 
-			map('v', '<leader>hs', function()
-				gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-			end, { desc = 'Hunk Stage Lines' })
+			set('<leader>hs', function() gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end,
+				'Hunk Stage Lines', 'v')
 
-			map('v', '<leader>hr', function()
-				gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-			end, { desc = 'Hunk Reset Lines' })
+			set('<leader>hr', function() gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end,
+				'Hunk Reset Lines', 'v')
 
-			map('n', '<leader>hS', gitsigns.stage_buffer, { desc = 'Hunk Stage Buffer' })
-			map('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'Hunk Reset Buffer' })
-			map('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'Hunk Preview' })
-			map('n', '<leader>hi', gitsigns.preview_hunk_inline, { desc = 'Hunk Inline Preview' })
+			set('<leader>hS', gitsigns.stage_buffer, 'Hunk Stage Buffer', 'v')
+			set('<leader>hR', gitsigns.reset_buffer, 'Hunk Reset Buffer', 'v')
+			set('<leader>hp', gitsigns.preview_hunk, 'Hunk Preview', 'v')
+			set('<leader>hi', gitsigns.preview_hunk_inline, 'Hunk Inline Preview', 'v')
 
-			map('n', '<C-K>', function()
-				gitsigns.blame_line({ full = true })
-			end, { desc = 'Blame current line' })
+			set('<A-k>', function() gitsigns.blame_line({ full = true }) end, 'Blame current line')
 
-			map('n', '<leader>gdf', gitsigns.diffthis, { desc = 'Git Diff' })
+			set('<leader>gdf', gitsigns.diffthis, 'Git Diff')
 
-			map('n', '<leader>hD', function()
+			set('<leader>hD', function()
+				---@diagnostic disable-next-line
 				gitsigns.diffthis('~')
-			end, { desc = 'Git Diff' })
+			end, 'Git Diff')
 
-			map('n', '<leader>hQ', function() gitsigns.setqflist('all') end, { desc = 'Add all changed file to QF' })
-			map('n', '<leader>hq', gitsigns.setqflist, { desc = 'Add current file to QF' })
+			---@diagnostic disable-next-line
+			set('<leader>hQ', function() gitsigns.setqflist('all') end, 'Add all changed file to QF')
+			set('<leader>hq', gitsigns.setqflist, 'Add current file to QF')
 
 			-- Toggles
-			-- map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
-			-- map('n', '<leader>td', gitsigns.toggle_deleted)
-			-- map('n', '<leader>tw', gitsigns.toggle_word_diff)
+			-- set('<leader>tb', gitsigns.toggle_current_line_blame)
+			-- set('<leader>td', gitsigns.toggle_deleted)
+			-- set('<leader>tw', gitsigns.toggle_word_diff)
 
 			-- Text object
-			-- map({ 'o', 'x' }, 'ih', gitsigns.select_hunk)
+			-- set('ih', gitsigns.select_hunk, '', { 'o', 'x' })
 
 			-- Document actions
-			map('n', '<leader>gbo', gitsigns.blame, { desc = '[D]ocument [B]lame [O]pen' })
+			set('<leader>gbo', gitsigns.blame, '[D]ocument [B]lame [O]pen')
 		end
 	}
 }

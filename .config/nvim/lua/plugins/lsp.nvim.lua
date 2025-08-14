@@ -143,7 +143,7 @@ return {
 							set('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
 						end
 
-						if client:supports_method(vim.lsp.protocol.Methods.workspaceSymbol_resolve, bufnr) then
+						if client:supports_method(vim.lsp.protocol.Methods.workspace_symbol, bufnr) then
 							set('<leader>ws', builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 						end
 
@@ -169,6 +169,18 @@ return {
 
 						if client:supports_method(vim.lsp.protocol.Methods.textDocument_references, bufnr) then
 							set('gr', builtin.lsp_references, '[G]oto [R]eferences')
+						end
+
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_diagnostic, bufnr) then
+							set('<leader>D', builtin.diagnostics, '[S]earch [D]iagnostics')
+						end
+
+						if client:supports_method(vim.lsp.protocol.Methods.textDocument_hover, bufnr) then
+							set('K', function()
+								vim.lsp.buf.hover({
+									close_events = { 'CursorMoved', 'CursorMovedI', 'InsertCharPre', 'BufHidden' }
+								})
+							end, '[S]earch [D]iagnostics')
 						end
 
 						-- maybe textDocument_inlayHint, textDocument_signatureHelp

@@ -17,12 +17,10 @@ return {
 		set('<leader>sh', builtin.help_tags, '[S]earch [H]elp')
 		set('<leader>ss', builtin.builtin, '[S]earch [S]elect Telescope')
 
-		set('<leader>D', builtin.diagnostics, '[S]earch [D]iagnostics')
-
 		set('<leader>sk', builtin.keymaps, '[S]earch [K]eymaps')
 		set('<leader>sf', builtin.find_files, '[S]earch [F]iles')
 		set('<leader>gf', builtin.git_files, 'Search [G]it [F]iles')
-		set('<leader>sw', builtin.grep_string, '[S]earch current [W]ord')
+		set('<leader>sw', builtin.grep_string, '[S]earch current [W]ord', { 'n', 'v' })
 		set('<leader>sg', builtin.live_grep, '[S]earch by [G]rep')
 		set('<leader>sr', builtin.resume, '[S]earch [R]esume')
 		set('<leader>s.', builtin.oldfiles, '[S]earch Recent Files ("." for repeat)')

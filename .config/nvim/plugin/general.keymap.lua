@@ -1,7 +1,4 @@
-require("keymap.lua-exec")
-require("keymap.chmod")
-
-local set = require('jjxav/helper').keymap.set
+local set = require('jjxav.helper').keymap.set
 
 set('<leader>fp', vim.cmd.bprevious, 'Go to previous buffer')
 set('<leader>fn', vim.cmd.bnext, 'Go to next buffer')
@@ -14,6 +11,9 @@ set('<leader>p', '"_dP', '[P]ut without replacing yank', { 'v' })
 set('<ESC>', '<cmd>nohlsearch<CR>', 'Clear search result', { 'n' })
 
 set('<leader>fc', '<cmd>let @+=@%<CR>', '[F]ile Path [C]opy Cliboard')
+
+set('<A-N>', '<cmd>cp<CR>')
+set('<A-M>', '<cmd>cn<CR>')
 
 set(
 	'<leader>cd',

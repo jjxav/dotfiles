@@ -10,9 +10,10 @@ return {
 	},
 	config = function()
 		local blame = require('gitblame')
+		local set = require('jjxav.helper').keymap.set
 
-		vim.keymap.set('n', '<leader>gbt', blame.toggle, { desc = '[G]it [B]lame [T]oggle' })
-		vim.keymap.set('n', '<leader>gbc', blame.copy_sha_to_clipboard, { desc = '[G]it [B]lame [C]opy SHA' })
+		set('<leader>gbt', blame.toggle, '[G]it [B]lame [T]oggle')
+		set('<leader>gbc', blame.copy_sha_to_clipboard, '[G]it [B]lame [C]opy SHA')
 	end,
 
 }

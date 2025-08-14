@@ -1,65 +1,37 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.g.loaded_netrw = false
-vim.g.loader_netrwPlugin = false
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out, "WarningMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
+end
+vim.opt.rtp:prepend(lazypath)
 
-require("lazy-init")
-require("keymap")
+-- Setup lazy.nvim
+require("lazy").setup({
 
-vim.wo.number = true
-vim.wo.relativenumber = true
+	change_detection = {
+		notify = false,
+	},
 
-vim.o.updatetime = 250
-vim.o.timeoutlen = 300
+	spec = {
+		{ import = "plugins" }
+	},
 
-vim.o.breakindent = true
+	dev = {
+		path = '~/plugins.nvim',
+		fallback = false,
+	},
 
-vim.o.undofile = true
-
-vim.o.ignorecase = true
-vim.o.smartcase = true
-
-vim.wo.signcolumn = 'yes'
-
-vim.o.completeopt = 'menuone,noselect'
-
-vim.o.termguicolors = true
-
-vim.g.editorconfig = true
-
-vim.g.shiftwidth = 1
-vim.g.autoindent = true
-vim.g.smartindent = false
-
-vim.o.scrolloff = 4
-
-vim.o.foldenable = false
-vim.o.foldlevel = 100
-
-vim.o.wrap = false
-vim.o.breakindent = true
-vim.o.showbreak = ''
-
-vim.opt.list = true
-vim.opt.listchars = { tab = '   ', trail = '·', nbsp = '␣' }
-
-vim.opt.inccommand = 'split'
-
-vim.opt.cursorline = true
-
-vim.diagnostic.config({
-	virtual_text = false,
-	virtual_lines = true,
-	severity_sort = true,
 })
-
-vim.o.textwidth = 120
--- vim.o.colorcolumn = "100"
-
--- transparent background
-vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
-vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
-vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none' })
-vim.api.nvim_set_hl(0, 'Pmenu', { bg = 'none' })
-

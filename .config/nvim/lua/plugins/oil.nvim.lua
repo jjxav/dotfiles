@@ -77,6 +77,6 @@ return {
 			watch_for_changes = true,
 		})
 
-		set('-', ':Oil<CR>', 'Back One Dir')
+		set('-', function() builtin.open() end, '[C]urrent [D]ir')
 	end,
 }

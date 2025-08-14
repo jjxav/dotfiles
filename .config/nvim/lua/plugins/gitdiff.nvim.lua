@@ -2,8 +2,9 @@ return {
 	'sindrets/diffview.nvim',
 	config = function()
 		local diffview = require('diffview')
+		local set = require('jjxav.helper').keymap.set
 
-		vim.keymap.set('n', '<leader>gdo', diffview.open, { desc = '[G]it [D]iff [O]pen' })
-		vim.keymap.set('n', '<leader>gdc', diffview.close, { desc = '[G]it [D]iff [C]lose' })
+		set('<leader>gdo', diffview.open, '[G]it [D]iff [O]pen')
+		set('<leader>gdc', diffview.close, '[G]it [D]iff [C]lose')
 	end,
 }

@@ -41,7 +41,11 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 if which pyenv 2>&1 > /dev/null ; then
 	eval "$(pyenv init - zsh)"
-	eval "$(pyenv virtualenv-init - zsh)"
+
+	pyenv virtualenv-init - zsh 2> /dev/null > /dev/null
+	if [ $? = 0 ]; then
+		eval "$(pyenv virtualenv-init - zsh)"
+	fi
 fi
 
 if which uv 2>&1 > /dev/null ; then
