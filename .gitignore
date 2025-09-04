@@ -16,3 +16,5 @@ gits/
 !.config/waybar
 !.config/wofi
 
+.local/*
+!.local/bin
