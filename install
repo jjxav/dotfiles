@@ -47,7 +47,7 @@ function arch () {
 	#
 	# Fonts
 	#
-	install noto-fonts-cjk nerd-fonts
+	install noto-fonts-cjk nerd-fonts > /dev/null
 	yay -Sy --noconfirm ttf-mplus-git
 
 	if [[ $target == 'desktop' ]]; then
@@ -108,6 +108,10 @@ function unbuntu() {
 	sudo rm -rf /opt/nvim
 	sudo tar -C /opt -xzf ./gits/nvim-linux.tar.gz
 
+	if ! type rustup; then
+		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	fi
+
 	# @TODO: install pyenv
 }
 
@@ -135,10 +139,6 @@ curl -s https://ohmyposh.dev/install.sh | bash -s
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
 [ ! -d ~/.tmux/plugins/tpm ] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-
-if ! type rustup; then
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-fi
 
 sudo localectl set-locale LC_TIME=ja_JP.UTF-8
 mkdir -p .zfunc
