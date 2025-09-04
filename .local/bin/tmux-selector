@@ -5,19 +5,19 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 dir=$($SCRIPT_DIR/git-search "$1")
 [[ ! $dir ]] && exit 1
 
-session_name=$(basename $dir | tr . _)
+session_name=$(basename "$dir" | tr . _ | tr ' ' _)
 current_session=$([[ -n "$TMUX" ]] && tmux display-message -p '#S')
 session_exist=$(tmux list-session 2> /dev/null | awk -F ':' '{ print $1 }' | grep "^$session_name$")
 
 if [ ! "$TMUX" ] && [ ! "$session_exist" ]; then
-	tmux new-session -ds "$session_name" -c $dir -n "vim" "nvim ."
+	tmux new-session -ds "$session_name" -c "$dir" -n "vim" "nvim ."
 	tmux new-window -d -n "git" -c "$dir"
 	tmux new-window -d -n "ssh" -c "$dir"
 	tmux new-window -d -n "other" -c "$dir"
 	tmux attach-session -d -t "$session_name"
 elif [ ! "$TMUX" ] && [ $session_exist ]; then
 	tmux attach-session -d -t "$session_name"
-elif [ "$TMUX" ] && [ ! $current_session = $session_name ] && [ ! "$session_exist" ]; then
+elif [ "$TMUX" ] && [ ! "$current_session" = "$session_name" ] && [ ! "$session_exist" ]; then
 	tmux new-session -ds "$session_name" -c "$dir" -n "vim" "nvim ."
 	tmux new-window -t "$session_name" -d -n "git" -c "$dir"
 	tmux new-window -t "$session_name" -d -n "ssh" -c "$dir"

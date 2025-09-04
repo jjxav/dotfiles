@@ -1,46 +1,54 @@
 #!/usr/bin/env bash
 
-git_dirs=""
-directories=""
-listing=""
-new_line=$'\n'
+IFS=$'\n'
+declare -a git_dirs=()
+declare -a directories=()
+declare -a listing=()
 
-[[ -w /srv ]] && directories=$(echo "$directories /srv" | xargs)
+[[ -w /srv ]] && directories+=("/srv")
 
 if [[ -w ~/project ]]; then
-	directories=$(echo "$directories $HOME/project" | xargs)
-	listing=$(echo "$listing $HOME/project" | xargs)
+	directories+=("$HOME/project")
+	listing+=("$HOME/project")
 fi
 
 if [[ -w ~/school ]]; then
-	directories=$(echo "$directories $HOME/school" | xargs)
-	listing=$(echo "$listing $HOME/school" | xargs)
+	directories+=("$HOME/school")
+	listing=("$HOME/school")
 fi
 
 if [[ -w /srv/Websites/ ]]; then
-	directories=$(echo "$directories /srv/Websites/" | xargs)
-	listing=$(echo "$listing /srv/Websites/" | xargs)
+	directories+=("/srv/Websites/")
+	listing+=("/srv/Websites/")
 fi
 
-[[ -w $HOME ]] && directories=$(echo "$directories $HOME" | xargs)
+[[ -w $HOME ]] && directories+=("$HOME")
 
 if [[ -d $1 ]]; then
-	directories=$(echo $directories $1 | xargs)
-	listing=$(echo $1 | xargs -n 1 echo)
+	directories+=($1)
+	listing+=($1)
 fi
 
+# echo "${listing[@]}"
+# echo "${directories[@]}"
+#
+# tmux has-session > /dev/null 2>&1 && git_dirs+=($(tmux list-sessions -F "#{session_path}" 2> /dev/null))
 
-directories=$(echo "$directories" | sort -n | uniq | xargs -n 1 echo)
-listing=$(echo "$listing" | sort -n | uniq | xargs -n 1 echo)
-tmux has-session > /dev/null 2>&1 && git_dirs=$(tmux list-sessions -F "#{session_path}" 2> /dev/null | xargs -n 1)
-[[ ! -z $directories ]] && git_dirs="$git_dirs$new_line$(echo "$directories" | xargs -I '@@' find @@ -maxdepth 2 -type d \( -name '.*' -o -name 'gits' -o -path '*/vendor/*' -o -path '*/node_modules/*' \) -prune -iname '.git' -exec dirname {}  \; | xargs realpath -L)"
-[[ ! -z $listing ]] && git_dirs="$git_dirs$new_line$(echo "$listing" | xargs -I '@@' find @@ -maxdepth 1 -exec realpath -L {} \;)"
+for d in "${directories[@]}"; do
+	git_dirs+=($(find "$d" -maxdepth 2 -type d \( -name '.*' -o -name 'gits' -o -path '*/vendor/*' -o -path '*/node_modules/*' \) -prune -iname '.git' -exec dirname {} \; | xargs -n 1 echo))
+done
+
+for d in "${listing[@]}"; do
+	git_dirs+=($(find "$d" -maxdepth 1 -exec realpath -L {} \;))
+done
+
 
 [[ -z $git_dirs ]] && exit 1
 
-git_dirs=$(echo "$git_dirs" | sort -n | uniq | xargs -n 1)
 
-dir=$(echo "$git_dirs" | fzf --list-label="Directories & Tmux sessions" --input-label="Search your directories" --preview-label="Directories Listing" --preview="eza --color always -lahF --icons --no-permissions --no-user --no-time --group-directories-first {}")
+declare -a found_dirs=($(printf '%s\n' "${git_dirs[@]}" | xargs -d'\n' -n 1 | sort -n | uniq))
+
+dir=$(printf '%s\n' "${found_dirs[@]}" | fzf --list-label="Directories & Tmux sessions" --input-label="Search your directories" --preview-label="Directories Listing" --preview="eza --color always -lahF --icons --no-permissions --no-user --no-time --group-directories-first {}")
 
 [[ ! $dir ]] && exit 1
 
