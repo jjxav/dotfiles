@@ -2,6 +2,8 @@
 vim.g.loaded_netrw = false
 vim.g.loader_netrwPlugin = false
 
+vim.o.swapfile = false
+
 vim.wo.number = true
 vim.wo.relativenumber = true
 
