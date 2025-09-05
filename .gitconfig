@@ -80,5 +80,7 @@
 	path = .gitconfig.github.prosomo
 [includeIf "hasconfig:remote.*.url:git@github.com:Yannickweb-net/**"]
 	path = .gitconfig.github.prosomo
+[includeIf "hasconfig:remote.*.url:buddy@app.buddy.works:*/**"]
+	path = .gitconfig.github.prosomo
 [includeIf "hasconfig:remote.*.url:git@github.com:prosomo/**"]
 	path = .gitconfig.github.prosomo
