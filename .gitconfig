@@ -74,6 +74,9 @@
 ; Personal
 [includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
 	path = .gitconfig.github
+; School
+[includeIf "hasconfig:remote.*.url:git@github.com:jjxav/open-food-facts.git"]
+	path = .gitconfig.github.school
 
 ; Profesional
 [includeIf "hasconfig:remote.*.url:git@github.com:Tonik-web-studio/**"]
