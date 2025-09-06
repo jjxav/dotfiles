@@ -3,5 +3,5 @@
 	email = xavier.legault.2@ulaval.ca
 
 [include]
-	path = .gitsigned
+	path = .gitsigned.school
 
