@@ -5,6 +5,10 @@ declare -a git_dirs=()
 declare -a directories=()
 declare -a listing=()
 
+function list_dir {
+	printf '%s\n' "$@"
+}
+
 [[ -w /srv ]] && directories+=("/srv")
 
 if [[ -w ~/project ]]; then
@@ -29,10 +33,7 @@ if [[ -d $1 ]]; then
 	listing+=($1)
 fi
 
-# echo "${listing[@]}"
-# echo "${directories[@]}"
-#
-# tmux has-session > /dev/null 2>&1 && git_dirs+=($(tmux list-sessions -F "#{session_path}" 2> /dev/null))
+tmux has-session > /dev/null 2>&1 && git_dirs+=($(tmux list-sessions -F "#{session_path}" 2> /dev/null))
 
 for d in "${directories[@]}"; do
 	git_dirs+=($(find "$d" -maxdepth 2 -type d \( -name '.*' -o -name 'gits' -o -path '*/vendor/*' -o -path '*/node_modules/*' \) -prune -iname '.git' -exec dirname {} \; | xargs -n 1 echo))
@@ -45,10 +46,9 @@ done
 
 [[ -z $git_dirs ]] && exit 1
 
+declare -a found_dirs=($(list_dir "${git_dirs[@]}" | xargs -d'\n' -n 1 | sort -n | uniq))
 
-declare -a found_dirs=($(printf '%s\n' "${git_dirs[@]}" | xargs -d'\n' -n 1 | sort -n | uniq))
-
-dir=$(printf '%s\n' "${found_dirs[@]}" | fzf --list-label="Directories & Tmux sessions" --input-label="Search your directories" --preview-label="Directories Listing" --preview="eza --color always -lahF --icons --no-permissions --no-user --no-time --group-directories-first {}")
+dir=$(list_dir "${found_dirs[@]}" | fzf --list-label="Directories & Tmux sessions" --input-label="Search your directories" --preview-label="Directories Listing" --preview="eza --color always -lahF --icons --no-permissions --no-user --no-time --group-directories-first {}")
 
 [[ ! $dir ]] && exit 1
 
