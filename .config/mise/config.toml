@@ -1,0 +1,8 @@
+[settings]
+python.uv_venv_auto = true
+status.missing_tools = "never"
+idiomatic_version_file_enable_tools = ["python"]
+experimental = true # For uv venv auto
+
+[tools]
+usage = "latest"

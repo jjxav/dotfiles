@@ -21,7 +21,7 @@ function arch () {
 	install git git-delta lazygit
 	install glab github-cli
 	install less man zoxide fzf
-	install neovim
+	install neovim mise
 	yay -Sy --noconfirm jqp-bin
 
 	#

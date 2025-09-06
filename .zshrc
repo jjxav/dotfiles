@@ -48,6 +48,11 @@ if which pyenv 2>&1 > /dev/null ; then
 	fi
 fi
 
+if which mise > /dev/null 2>&1 ; then
+	eval "$(mise activate zsh --silent)"
+	eval "$(mise completion zsh)"
+fi
+
 if which uv 2>&1 > /dev/null ; then
 	eval "$(uv generate-shell-completion zsh)"
 fi
