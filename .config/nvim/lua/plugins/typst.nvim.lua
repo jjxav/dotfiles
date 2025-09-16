@@ -10,10 +10,12 @@ return {
 
 		local close_preview = function(buff_id)
 			local cmd = vim.api.nvim_parse_cmd('TypstPreviewStop', {})
+			--- @diagnostic disable-next-line param-type-mismatch
 			vim.api.nvim_cmd(cmd, {})
 		end
 		local open_preview = function(buff_id)
 			local cmd = vim.api.nvim_parse_cmd('TypstPreview', {})
+			--- @diagnostic disable-next-line param-type-mismatch
 			vim.api.nvim_cmd(cmd, {})
 		end
 
