@@ -61,8 +61,7 @@ return {
 			vim.keymap.del('n', 'gri')
 			vim.keymap.del('n', 'grt')
 
-			local builtin = require('telescope.builtin')
-
+			local builtin = require('fzf-lua')
 
 			local register = function(client, bufnr)
 				local set = function(keys, func, desc, mode)
@@ -137,7 +136,7 @@ return {
 				end
 
 				if client:supports_method(vim.lsp.protocol.Methods.workspace_symbol, bufnr) then
-					set('<leader>ws', builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+					set('<leader>ws', builtin.lsp_workspace_symbols, '[W]orkspace [S]ymbols')
 				end
 
 				if client:supports_method(vim.lsp.protocol.Methods.textDocument_documentSymbol, bufnr) then
@@ -149,7 +148,7 @@ return {
 				end
 
 				if client:supports_method(vim.lsp.protocol.Methods.textDocument_typeDefinition, bufnr) then
-					set('<leader>D', builtin.lsp_type_definitions, 'Type [D]efinition')
+					set('<leader>D', builtin.lsp_definitions, 'Type [D]efinition')
 				end
 
 				if client:supports_method(vim.lsp.protocol.Methods.textDocument_declaration, bufnr) then
@@ -165,7 +164,7 @@ return {
 				end
 
 				if client:supports_method(vim.lsp.protocol.Methods.textDocument_diagnostic, bufnr) then
-					set('<leader>D', builtin.diagnostics, '[S]earch [D]iagnostics')
+					set('<leader>D', builtin.diagnostics_document, '[S]earch [D]iagnostics')
 				end
 
 				if client:supports_method(vim.lsp.protocol.Methods.textDocument_hover, bufnr) then
