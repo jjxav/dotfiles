@@ -16,6 +16,9 @@ return {
 		set('<leader>sr', builtin.resume, '[S]earch [R]esume')
 		set('<leader>s.', builtin.oldfiles, '[S]earch Recent Files ("." for repeat)')
 
+		set('<leader>gc', builtin.git_commits, '[S]earch [G]it [C]ommit')
+		set('<leader>gh', builtin.git_bcommits, '[S]earch [G]it Commit for Buffer')
+
 		set('<leader><leader>', builtin.buffers, '[ ] Find existing buffers')
 		set('<leader>/', builtin.blines, '[S]earch in file')
 	end,
