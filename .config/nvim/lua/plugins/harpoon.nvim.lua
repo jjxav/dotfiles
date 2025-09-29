@@ -12,6 +12,11 @@ return {
 
 		set("<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 
+		set("<A-Q>", function() harpoon:list():replace_at(1) end)
+		set("<A-W>", function() harpoon:list():replace_at(2) end)
+		set("<A-E>", function() harpoon:list():replace_at(3) end)
+		set("<A-R>", function() harpoon:list():replace_at(4) end)
+
 		set("<A-q>", function() harpoon:list():select(1) end)
 		set("<A-w>", function() harpoon:list():select(2) end)
 		set("<A-e>", function() harpoon:list():select(3) end)
