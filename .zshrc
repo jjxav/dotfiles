@@ -31,10 +31,14 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+if [ ! -d "~/.zfunc" ]; then
+	mkdir -p ~/.zfunc
+fi
+
 if [ -s $HOME/.cargo/env ]; then
 	. "$HOME/.cargo/env"
-	rustup completions zsh > ~/.zfunc/_rustup
-	rustup completions zsh cargo > ~/.zfunc/_rustup
+	[ ! -f ~/.zfunc/_rustup ] && rustup completions zsh > ~/.zfunc/_rustup
+	[ ! -f ~/.zfunc/_rustup ] && rustup completions zsh cargo > ~/.zfunc/_cargo
 fi
 
 export PYENV_ROOT="$HOME/.pyenv"
