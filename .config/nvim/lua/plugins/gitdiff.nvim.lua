@@ -1,6 +1,6 @@
 return {
 	'sindrets/diffview.nvim',
-	disabled = true,
+	enabled = false,
 	config = function()
 		local diffview = require('diffview')
 		local set = require('jjxav.helper').keymap.set

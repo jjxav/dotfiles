@@ -43,6 +43,7 @@ local servers = {
 return {
 	{
 		'neovim/nvim-lspconfig',
+		enabled = true,
 		dependencies = {
 			{ 'williamboman/mason.nvim', opts = {} },
 			'williamboman/mason-lspconfig.nvim',
@@ -167,12 +168,16 @@ return {
 					set('<leader>D', builtin.diagnostics_document, '[S]earch [D]iagnostics')
 				end
 
-				if client:supports_method(vim.lsp.protocol.Methods.textDocument_hover, bufnr) then
+				if client:supports_method(vim.lsp.protocol.Methods.textDocument_switch, bufnr) then
 					set('K', function()
 						vim.lsp.buf.hover({
 							close_events = { 'CursorMoved', 'CursorMovedI', 'InsertCharPre', 'BufHidden' }
 						})
 					end, '[S]earch [D]iagnostics')
+				end
+
+				if client:supports_method("textDocument_switchSourceHeader", bufnr) then
+					set('<A-o>', "<cmd>LspClangdSwitchSourceHeader<cr>", '[S]earch [D]iagnostics')
 				end
 
 				-- maybe textDocument_inlayHint, textDocument_signatureHelp
