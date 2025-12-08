@@ -16,11 +16,19 @@ return {
 		set("<A-W>", function() harpoon:list():replace_at(2) end)
 		set("<A-E>", function() harpoon:list():replace_at(3) end)
 		set("<A-R>", function() harpoon:list():replace_at(4) end)
+		set("<A-A>", function() harpoon:list():replace_at(5) end)
+		set("<A-S>", function() harpoon:list():replace_at(6) end)
+		set("<A-D>", function() harpoon:list():replace_at(7) end)
+		set("<A-F>", function() harpoon:list():replace_at(8) end)
 
 		set("<A-q>", function() harpoon:list():select(1) end)
 		set("<A-w>", function() harpoon:list():select(2) end)
 		set("<A-e>", function() harpoon:list():select(3) end)
 		set("<A-r>", function() harpoon:list():select(4) end)
+		set("<A-a>", function() harpoon:list():select(5) end)
+		set("<A-s>", function() harpoon:list():select(6) end)
+		set("<A-d>", function() harpoon:list():select(7) end)
+		set("<A-f>", function() harpoon:list():select(8) end)
 
 		-- Toggle previous & next buffers stored within Harpoon list
 		set("<A-n>", function() harpoon:list():prev() end)
