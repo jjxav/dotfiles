@@ -1,59 +1,14 @@
-local servers = {
-	clangd = {},
-	pyright = {},
-	html = { filetypes = { 'html', 'twig', 'hbs' } },
-	angularls = { filetypes = { 'angular' } },
-	intelephense = {
-		stubs = {
-			"amqp", "apache", "apcu", "bcmath", "blackfire", "bz2", "calendar", "cassandra",
-			"com_dotnet", "Core", "couchbase", "crypto", "ctype", "cubrid", "curl", "date",
-			"dba", "decimal", "dom", "ds", "enchant", "Ev", "event", "exif", "fann", "FFI",
-			"ffmpeg", "fileinfo", "filter", "fpm", "ftp", "gd", "gearman", "geoip", "geos",
-			"gettext", "gmagick", "gmp", "gnupg", "grpc", "hash", "http", "ibm_db2", "iconv",
-			"igbinary", "imagick", "imap", "inotify", "interbase", "intl", "json", "judy",
-			"ldap", "leveldb", "libevent", "libsodium", "libxml", "lua", "lzf", "mailparse",
-			"mapscript", "mbstring", "mcrypt", "memcache", "memcached", "meminfo", "meta",
-			"ming", "mongo", "mongodb", "mosquitto-php", "mqseries", "msgpack", "mssql", "mysql",
-			"mysql_xdevapi", "mysqli", "ncurses", "newrelic", "oauth", "oci8", "odbc", "openssl",
-			"parallel", "Parle", "pcntl", "pcov", "pcre", "pdflib", "PDO", "pdo_ibm", "pdo_mysql",
-			"pdo_pgsql", "pdo_sqlite", "pgsql", "Phar", "phpdbg", "posix", "pspell", "pthreads",
-			"radius", "rar", "rdkafka", "readline", "recode", "redis", "Reflection", "regex",
-			"rpminfo", "rrd", "SaxonC", "session", "shmop", "SimpleXML", "snmp", "soap",
-			"sockets", "sodium", "solr", "SPL", "SplType", "SQLite", "sqlite3", "sqlsrv",
-			"ssh2", "standard", "stats", "stomp", "suhosin", "superglobals", "svn", "sybase",
-			"sync", "sysvmsg", "sysvsem", "sysvshm", "tidy", "tokenizer", "uopz", "uv", "v8js",
-			"wddx", "win32service", "winbinder", "wincache", "wordpress", "xcache", "xdebug",
-			"xhprof", "xml", "xmlreader", "xmlrpc", "xmlwriter", "xsl", "xxtea", "yaf", "yaml",
-			"yar", "zend", "Zend OPcache", "ZendCache", "ZendDebugger", "ZendUtils", "zip",
-			"zlib", "zmq", "zookeeper"
-		},
-		environment = { phpVersion = '8.4.0' }
-	},
-	rust_analyzer = {},
-
-	lua_ls = {
-		Lua = {
-			workspace = { checkThirdParty = false },
-			telemetry = { enable = false },
-			diagnostics = { disable = { 'missing-fields' } },
-		},
-	},
-}
-
 return {
 	{
 		'neovim/nvim-lspconfig',
 		enabled = true,
 		dependencies = {
-			{ 'williamboman/mason.nvim', opts = {} },
-			'williamboman/mason-lspconfig.nvim',
-			'WhoIsSethDaniel/mason-tool-installer.nvim',
-
-			{ 'j-hui/fidget.nvim',       opts = {} },
-
-			'hrsh7th/cmp-nvim-lsp',
-
-			"williamboman/mason.nvim",
+			{ 'mason-org/mason.nvim', opts = {} },
+			'mason-org/mason-lspconfig.nvim',
+			{ 'WhoIsSethDaniel/mason-tool-installer.nvim', opts = {} },
+			{ 'j-hui/fidget.nvim', opts = {} },
+			{ 'hrsh7th/cmp-nvim-lsp', opts = {} },
+			'fzf-lua'
 		},
 		config = function()
 			vim.keymap.del('n', 'grn')
@@ -63,6 +18,7 @@ return {
 			vim.keymap.del('n', 'grt')
 
 			local builtin = require('fzf-lua')
+			local servers = require('lsp/init')
 
 			local register = function(client, bufnr)
 				local set = function(keys, func, desc, mode)
@@ -122,10 +78,10 @@ return {
 				end
 
 				if client:supports_method(vim.lsp.protocol.Methods.textDocument_foldingRange, bufnr) then
-					vim.o.foldmethod = 'expr'
-					vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+					-- vim.o.foldmethod = 'expr'
+					-- vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 				else
-					vim.o.foldmethod = 'manual'
+					-- vim.o.foldmethod = 'manual'
 				end
 
 				if client:supports_method(vim.lsp.protocol.Methods.textDocument_rename, bufnr) then
@@ -177,7 +133,7 @@ return {
 				end
 
 				if client:supports_method("textDocument_switchSourceHeader", bufnr) then
-					set('<A-o>', "<cmd>LspClangdSwitchSourceHeader<cr>", '[S]earch [D]iagnostics')
+					-- set('<A-o>', "<cmd>LspClangdSwitchSourceHeader<cr>", '[S]earch [D]iagnostics')
 				end
 
 				-- maybe textDocument_inlayHint, textDocument_signatureHelp
@@ -209,6 +165,11 @@ return {
 				end,
 			})
 
+			vim.api.nvim_create_autocmd('LspNotify', {
+				callback = function()
+				end,
+			})
+
 			-- Add a handler for when a LSP add capability after attaching
 			vim.lsp.handlers['client/registerCapability'] = (function(overridden)
 				return function(err, res, ctx)
@@ -224,12 +185,6 @@ return {
 				end
 			end)(vim.lsp.handlers['client/registerCapability'])
 
-			-- vim.api.nvim_create_autocmd('LspNotify', {
-			-- 	callback = function(args)
-			-- 		print(vim.inspect(args))
-			-- 	end
-			-- })
-
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, { 'stylua' })
 
@@ -239,35 +194,38 @@ return {
 			require('mason-tool-installer').setup {
 				ensure_installed = ensure_installed
 			}
+			--
+			-- require('mason-lspconfig').setup {
+			--
+			-- }
 
-			require('mason-lspconfig').setup {
-				handlers = {
-					function(server_name)
-						local server = servers[server_name] or {}
-						server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+			for server_name, _ in pairs(servers) do
+				local server = servers[server_name] or {}
+				server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
 
-						if server == {} then
-							return
-						end
+				vim.lsp.config(server_name, server)
+				vim.lsp.enable(server_name)
+			end
 
-						require('lspconfig')[server_name].setup(server)
-					end,
-				}
-			}
+			require('mason-lspconfig').setup {}
 		end,
 	},
 
 	-- Autocompletion
 	{
-		'hrsh7th/nvim-cmp',
-		event = 'InsertEnter',
-		config = function()
-			local cmp = require 'cmp'
-			cmp.setup {}
-		end,
-	},
-	{
 		'saghen/blink.cmp',
+		dependencies = {
+			{
+				'hrsh7th/nvim-cmp',
+				enabled = true,
+				event = 'InsertEnter',
+				config = function()
+					local cmp = require 'cmp'
+					cmp.setup {}
+				end,
+			},
+
+		},
 
 		-- use a release tag to download pre-built binaries
 		version = '*',
@@ -281,7 +239,7 @@ return {
 				nerd_font_variant = 'mono'
 			},
 			sources = {
-				default = { 'lsp', 'path', 'snippets', 'buffer' },
+				default = { 'lsp', 'path', 'buffer' }, -- 'snippets', 
 			},
 		},
 		opts_extend = { "sources.default" }
