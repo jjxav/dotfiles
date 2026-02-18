@@ -33,7 +33,7 @@ if [[ -d $1 ]]; then
 	listing+=($1)
 fi
 
-tmux has-session > /dev/null 2>&1 && git_dirs+=($(tmux list-sessions -F "#{session_path}" 2> /dev/null | xargs -0 -I{} dirname "{}"))
+tmux has-session > /dev/null 2>&1 && git_dirs+=($(tmux list-sessions -F "#{session_path}" 2> /dev/null))
 
 for d in "${directories[@]}"; do
 	git_dirs+=($(find "$d" -maxdepth 4 -type d \( -name '.*' -o -name 'gits' -o -path '*/vendor/*' -o -path '*/node_modules/*' \) -prune -iname '.git' -exec dirname {} \; | xargs -0 -I {} -n 1 echo -n "{}"))
