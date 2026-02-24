@@ -40,7 +40,7 @@ for d in "${directories[@]}"; do
 done
 
 for d in "${listing[@]}"; do
-	git_dirs+=($(find "$d" -maxdepth 1 -exec realpath -L {} \;))
+	git_dirs+=($(find "$d" -maxdepth 1 -type d -exec realpath -L {} \;))
 done
 
 
