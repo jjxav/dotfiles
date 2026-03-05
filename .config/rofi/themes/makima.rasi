@@ -5,13 +5,31 @@
  */
 
 * {
-    foreground:  #5B241E;
-	background: #C36658;
-    backlight:   #ccffeedd;
+	// color ?: https://www.pixiv.net/en/artworks/139368579
+	// color bw ?: https://www.pixiv.net/en/artworks/138316513
+    foreground:		#5B241E;
+    backlight:		#ccffeedd;
+	highlight-bg:	#aa4b80;
+	highlight-fg:	none #fff;
+	/// background:		#fcf1e6;
+	/// background:		#884035;
+
+    backlight:				#5B241E;
+	foreground:				#DFBBB0;
+	background:				#7D3D37;
+	placeholder:			#DFBBB0dd;
+
+	highlight-selected-bg:	#5B241E;
+	highlight-selected-fg:	none #fff;
+	highlight-bg:			#5B241E;
+	highlight-fg:			underline #C36658;
+
+	/// h: #7D3D37;
 
 	btn-border: #000;
 
-	image: url("~/.config/rofi/themes/makima.png", height);
+	// image: url("~/.config/rofi/themes/makima-01.png", height);
+	image: url("~/.config/rofi/themes/makima-02.png", height);
 
     background-color:  transparent;
     transparent: "real";
@@ -21,6 +39,7 @@
 
 window {
 	location: center;
+	padding: 25px;
 	anchor: center;
 	background-color: @background;
 	orientation: horizontal;
@@ -29,7 +48,7 @@ window {
 
 layout {
 	background-color: @background;
-	children: [ search, layout-inner ];
+	children: [ layout-inner ];
 	orientation: vertical;
 	spacing: 0;
 }
@@ -47,9 +66,11 @@ mode-switcher {
 }
 
 button {
-	border: 1px solid;
-	border-color: @btn-border;
-	border-radius: 5px;
+	// border: 1px solid;
+	// border-color: @btn-border;
+	// border-radius: 5px;
+	// color: @foreground;
+	// background-color: @background;
 	cursor: pointer;
 }
 
@@ -64,18 +85,34 @@ inputbar {
 	children: [prompt, ponctuation, entry, fr, ns, ci];
 }
 
+custom-prompt-open {
+	expand: false;
+	color: @foreground;
+	content: "[";
+}
+custom-prompt-close {
+	expand: false;
+	color: @foreground;
+	content: "]";
+}
+custom-prompt {
+	expand: false;
+	children: [ custom-prompt-open, prompt, custom-prompt-close ];
+}
+
 prompt {
+	color: @foreground;
 	expand: false;
 }
 
 background {
-	width: 21em;
+	width: 350px;
 	expand: false;
 	background-image: @image;
 }
 
 mainbox {
-	children: [message, listview, mode-switcher];
+	children: [search, mode-switcher, message, listview];
 }
 
 listview {
@@ -112,26 +149,38 @@ inputbar {
 entry {
 	cursor: pointer;
 	placeholder: "What do you want filthy mutt";
-	// placeholder-color: #999;
+	color: @foreground;
+	placeholder-color: @placeholder;
 }
 
-element {
-	padding: 5px 10px 5px;
+element-text selected {
+	highlight:			@highlight-selected-fg;
 }
 
 element selected {
-    // background-color: #eee;
+	background-color:	@highlight-selected-bg;
+	border:				1px solid;
+	border-radius:		5px;
 }
 
-element-icon {
-	expand: false;
-	size: 25;
-	margin: 0 10px 0 0;
+element {
+	orientation: horizontal;
+	padding: 5px 10px 5px;
+	children: [ element-text ];
 }
+
+tomate {
+	content: ">";
+}
+
+// element-icon {
+// 	expand: false;
+// 	size: 25;
+// 	margin: 0 10px 0 0;
+// }
 
 element-text {
-	color: @foreground;
-	highlight: underline #000;
+	color:			@foreground;
+	highlight:		@highlight-fg;
 	vertical-align: 0.5;
 }
-	

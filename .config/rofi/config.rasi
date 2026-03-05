@@ -5,7 +5,7 @@ configuration {
 /*	yoffset: 0;*/
 /*	xoffset: 0;*/
 /*	fixed-num-lines: true;*/
-	show-icons: true;
+	show-icons: false;
 /*	preview-cmd: ;*/
 /*	on-selection-changed: ;*/
 /*	on-mode-changed: ;*/
@@ -26,7 +26,7 @@ configuration {
 /*	drun-categories: ;*/
 /*	drun-exclude-categories: ;*/
 /*	drun-show-actions: false;*/
-/* drun-display-format: "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";*/
+/*	drun-display-format: "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";*/
 /*	drun-url-launcher: "xdg-open";*/
 /*	disable-history: false;*/
 /*	ignored-prefixes: "";*/
@@ -50,7 +50,8 @@ configuration {
 /*	threads: 0;*/
 /*	scroll-method: 0;*/
 /*	window-format: "{w}    {c}   {t}";*/
-/*	click-to-exit: true;*/
+	click-to-exit: true;
+/*	global-kb: false;*/
 /*	max-history-size: 25;*/
 /*	combi-hide-mode-prefix: false;*/
 /*	combi-display-format: "{mode} {text}";*/
@@ -67,16 +68,14 @@ configuration {
 /*	completer-mode: "filebrowser";*/
 /*	imdkit: true;*/
 /*	pid: "/run/user/1000/rofi.pid";*/
-	display-window: "Windows";
-/*	display-windowcd: ;*/
-	display-run: "Do it";
-	display-ssh: "Dragon Scene";
-	display-drun: "Apps";
+	// display-window: "Windows";
+	// display-run: "Do it";
+	// display-ssh: "Dragon Scene";
+	// display-drun: "Apps";
 /*	display-combi: ;*/
 /*	display-keys: ;*/
 /*	display-filebrowser: ;*/
 /*	display-recursivebrowser: ;*/
-
 /*	kb-primary-paste: "Control+V,Shift+Insert";*/
 /*	kb-secondary-paste: "Control+v,Insert";*/
 /*	kb-secondary-copy: "Control+c";*/
@@ -150,17 +149,14 @@ configuration {
 /*	kb-entry-history-up: "Control+Up";*/
 /*	kb-entry-history-down: "Control+Down";*/
 /*	kb-matcher-up: "Super+equal";*/
-/*	kb-mather-down: "Super+minus";*/
-
+/*	kb-matcher-down: "Super+minus";*/
 /*	ml-row-left: "ScrollLeft";*/
 /*	ml-row-right: "ScrollRight";*/
 /*	ml-row-up: "ScrollUp";*/
 /*	ml-row-down: "ScrollDown";*/
-
 /*	me-select-entry: "MousePrimary";*/
 /*	me-accept-entry: "MouseDPrimary";*/
 /*	me-accept-custom: "Control+MouseDPrimary";*/
-
   timeout {
       action: "kb-cancel";
       delay:  0;
