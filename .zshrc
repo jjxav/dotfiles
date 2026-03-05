@@ -65,6 +65,10 @@ if which oh-my-posh 2>&1 > /dev/null ; then
 	eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/noob.yml)"
 fi
 
+if type eww 2>&1 > /dev/null ; then
+	eval "$(eww shell-completions --shell zsh)"
+fi
+
 export HISTFILE=$HOME/.zsh_history
 export HISTFILESIZE=1000000000
 export HISTSIZE=$HISTFILESIZE
