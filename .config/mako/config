@@ -1,0 +1,30 @@
+sort=-time
+layer=overlay
+# anchor=top-left
+background-color=#3a3b3dcc
+width=500
+height=200
+border-size=2
+border-color=#5a5b5eff
+border-radius=5
+padding=15
+icons=1
+progress-color=source #5a5b5eff
+max-icon-size=32
+default-timeout=10000
+ignore-timeout=1
+font=CaskaydiaMono Nerd Font Mono 14
+
+[urgency=low]
+border-color=#cccccc
+
+[urgency=normal]
+border-color=#d08770
+
+[urgency=high]
+border-color=#bf616a
+default-timeout=0
+
+[category=mpd]
+default-timeout=2000
+group-by=category
