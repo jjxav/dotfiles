@@ -7,7 +7,7 @@ fpath+=~/.zfunc
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.config}/zinit"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-source "${ZINIT_HOME}/zinit.zsh"
+[ -f $ZINIT_HOME/zinit.zsh ] && source "${ZINIT_HOME}/zinit.zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 if which fzf 2>&1 > /dev/null ; then
