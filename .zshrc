@@ -69,6 +69,10 @@ if type eww 2>&1 > /dev/null ; then
 	eval "$(eww shell-completions --shell zsh)"
 fi
 
+if type glab 2>&1 > /dev/null ; then
+	eval "$(glab completion -s zsh)"
+fi
+
 export HISTFILE=$HOME/.zsh_history
 export HISTFILESIZE=1000000000
 export HISTSIZE=$HISTFILESIZE
