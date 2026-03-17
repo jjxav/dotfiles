@@ -62,3 +62,6 @@ vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
 vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none' })
 vim.api.nvim_set_hl(0, 'Pmenu', { bg = 'none' })
 
+vim.opt.spelllang = 'en_ca,fr_ca'
+vim.opt.spell = true
+
