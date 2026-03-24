@@ -73,6 +73,10 @@ if type glab 2>&1 > /dev/null ; then
 	eval "$(glab completion -s zsh)"
 fi
 
+if type opam 2>&1 > /dev/null ; then
+	[[ ! -r '/home/jjxav/.opam/opam-init/init.zsh' ]] || source '/home/jjxav/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+fi
+
 export HISTFILE=$HOME/.zsh_history
 export HISTFILESIZE=1000000000
 export HISTSIZE=$HISTFILESIZE
