@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+pass_ssh=$(history a | awk -F '  ' '{ print $2 }' | rg '^ssh ' | sort -n | uniq)
+
+echo $pass_ssh | fzf
