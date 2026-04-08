@@ -35,3 +35,12 @@ require("lazy").setup({
 	},
 
 })
+
+vim.pack.add({
+
+}, {
+	load = true,
+})
+
+
+vim.cmd("packadd nvim.undotree")
