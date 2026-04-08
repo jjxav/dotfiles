@@ -4,6 +4,7 @@
 
 [commit]
 	gpgsign = true
+	template = /home/jjxav/.gitmessage
 
 [core]
 	excludesFile = ~/.gitignore
