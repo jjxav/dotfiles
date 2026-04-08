@@ -21,7 +21,7 @@
 	prune = true
 
 [pull]
-	ff = true
+	ff = only
 
 [push]
 	followTags = true
