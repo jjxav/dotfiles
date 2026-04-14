@@ -6,6 +6,9 @@
 	gpgsign = true
 	template = /home/jjxav/.gitmessage
 
+[gpg]
+	format = ssh
+
 [core]
 	excludesFile = ~/.gitignore
 	editor = nvim
