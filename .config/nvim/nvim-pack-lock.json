@@ -1,3 +1,28 @@
 {
-  "plugins": []
+  "plugins": {
+    "kanagawa.nvim": {
+      "rev": "8ad3b4cdcc804b332c32db8f9743667e1bb82b99",
+      "src": "https://github.com/rebelot/kanagawa.nvim"
+    },
+    "lualine.nvim": {
+      "rev": "131a558e13f9f28b15cd235557150ccb23f89286",
+      "src": "https://github.com/nvim-lualine/lualine.nvim"
+    },
+    "nvim-web-devicons": {
+      "rev": "4fc505ac7bd7692824a142e96e5f529c133862f8",
+      "src": "https://github.com/nvim-tree/nvim-web-devicons"
+    },
+    "ron.vim": {
+      "rev": "f749e543975a82e8dd9a6e7df9600a1c098ae800",
+      "src": "https://github.com/ron-rs/ron.vim"
+    },
+    "vim-sleuth": {
+      "rev": "be69bff86754b1aa5adcbb527d7fcd1635a84080",
+      "src": "https://github.com/tpope/vim-sleuth"
+    },
+    "yuck.vim": {
+      "rev": "9b5e0370f70cc30383e1dabd6c215475915fe5c3",
+      "src": "https://github.com/elkowar/yuck.vim"
+    }
+  }
 }

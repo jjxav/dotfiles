@@ -1,4 +1,5 @@
 return {
+	'https://github.com/rebelot/kanagawa.nvim',
 	opts = {
 		theme = 'dragon',
 		background = {
