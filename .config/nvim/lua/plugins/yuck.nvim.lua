@@ -1,3 +1,3 @@
 return {
-	'elkowar/yuck.vim'
+	'https://github.com/elkowar/yuck.vim',
 }

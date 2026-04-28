@@ -1,7 +1,7 @@
 return {
-	'nvim-lualine/lualine.nvim',
+	'https://github.com/nvim-lualine/lualine.nvim',
 	opts = {},
 	dependencies = {
-		'nvim-tree/nvim-web-devicons',
+		'https://github.com/nvim-tree/nvim-web-devicons',
 	},
 }
