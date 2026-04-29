@@ -1,48 +1,15 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Bootstrap lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-	if vim.v.shell_error ~= 0 then
-		vim.api.nvim_echo({
-			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-			{ out, "WarningMsg" },
-			{ "\nPress any key to exit..." },
-		}, true, {})
-		vim.fn.getchar()
-		os.exit(1)
-	end
-end
-vim.opt.rtp:prepend(lazypath)
-
--- Setup lazy.nvim
-require("lazy").setup({
-
-	change_detection = {
-		notify = false,
-	},
-
-	spec = {
-		{ import = "plugins" }
-	},
-
-	dev = {
-		path = '~/plugins.nvim',
-		fallback = false,
-	},
-
-})
+local helper_path = vim.fs.normalize '~/plugins.nvim/helper.nvim'
+local switcher_path = vim.fs.normalize '~/plugins.nvim/switcher.nvim'
+vim.opt.rtp:prepend(helper_path)
+vim.opt.rtp:prepend(switcher_path)
 
 local packpath = vim.fn.stdpath("data") .. "/site/"
 vim.opt.pp:prepend(packpath)
-vim.pack.add({
 
-	-- Lualine
-	'https://github.com/nvim-tree/nvim-web-devicons', -- deps for nvim-lualine/lualine.nvim
-	'https://github.com/nvim-lualine/lualine.nvim',
+vim.pack.add({
 
 	-- RON file
 	'https://github.com/ron-rs/ron.vim',
@@ -52,24 +19,7 @@ vim.pack.add({
 
 	-- EditoConfig tabstop & tabwidth & endofline, etc
 	'https://github.com/tpope/vim-sleuth',
-
-	'https://github.com/rebelot/kanagawa.nvim',
 })
 
+vim.cmd.packadd("nvim.undotree")
 
-require('kanagawa').setup({
-	theme = 'dragon',
-	background = {
-		dark = "dragon"
-	},
-})
-vim.cmd.colorscheme("kanagawa")
--- transparent background
-vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
-vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
-vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'none' })
-vim.api.nvim_set_hl(0, 'Pmenu', { bg = 'none' })
-require('lualine').setup({})
-
-
-vim.cmd("packadd! nvim.undotree")
