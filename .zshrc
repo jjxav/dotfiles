@@ -77,6 +77,14 @@ if type opam 2>&1 > /dev/null ; then
 	[[ ! -r '/home/jjxav/.opam/opam-init/init.zsh' ]] || source '/home/jjxav/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
 fi
 
+# pnpm
+export PNPM_HOME="/home/jjxav/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
 export HISTFILE=$HOME/.zsh_history
 export HISTFILESIZE=1000000000
 export HISTSIZE=$HISTFILESIZE
